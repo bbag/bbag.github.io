@@ -1,0 +1,163 @@
+---
+import Terminal from '@/components/home/Terminal.astro'
+import DotsBackground from '@/assets/img/dots-background.svg'
+---
+
+<section class="full-width">
+    <!-- Hi -->
+    <div class="home-hero">
+        <div class="col-left">
+            <div class="headings">
+                <h1>Hey, I'm Billy!</h1>
+                <h2>Frontend developer, UX/UI + Product Designer</h2>
+            </div>
+            <p>From <button class="kbd-button">sketch</button> to <button class="kbd-button">wireframe</button> to <button class="kbd-button">production</button>, I bring web apps, products, and sites to life with code.</p>
+            <Terminal />
+        </div>
+        <div class="col-right">
+            <p>Hey stranger!<br /><br />It looks like you stumbled upon this portolfio at an interesting time... everything’s under construction at the moment, but should be polished up soon! 😅<br /><br />(As a teaser, this section here will have a snazzy, interactive graphic of a mobile app UI.)</p>
+        </div>
+    </div>
+</section>
+
+<style lang="scss" define:vars={{ bg: `url(${DotsBackground.src}` }}>
+@import '@/styles/variables.scss';
+
+section {
+    position: relative;
+
+    &::after,
+    &::before {
+        background-attachment: fixed;
+        background-image: var(--bg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        content: '';
+        left: 0;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        z-index: -1;
+    }
+
+    &::after {
+        // background-color: rgba(255, 0, 0, 0.1);
+        bottom: 4rem;
+        top: 0;
+    }
+
+    &::before {
+        // background-color: rgba(0, 0, 255, 0.1);
+        bottom: -32rem;
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+        top: calc(100% - 4rem);
+    }
+}
+
+.home-hero {
+    align-content: center;
+    display: grid;
+    gap: 4rem;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+}
+
+.col-left {
+    display: grid;
+    gap: 3rem;
+}
+
+.col-right {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    & p {
+        border-radius: 1rem;
+        color: rgb(85, 69, 0);
+        font-size: 1.125rem;
+        background: rgba(255, 233, 135, 0.35);
+        padding: 2rem;
+    }
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 0.25rem;
+}
+
+p {
+    font-size: 1.625rem;
+}
+
+.kbd-button {
+    background: transparent;
+    border: 0;
+    border-radius: 0.5rem;
+    box-sizing: content-box;
+    color: $color-text-light;
+    line-height: 1;
+    padding: 0.1875em 0.3125em;
+    position: relative;
+    z-index: 1;
+    
+    &,
+    &::after,
+    &::before {
+        transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1), transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    &::after,
+    &::before {
+        border: 1px solid #BFC8D6;
+        border-radius: 0.5rem;
+        box-sizing: content-box;
+        content: '';
+        height: 100%;
+        left: -1px;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+    }
+    
+    &::after {
+        background: linear-gradient(180deg, #FFFFFF 0%, #E5E9EF 100%);
+        top: 0;
+    }
+    
+    &::before {
+        background: #D6DEEA;
+        box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1), 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.06);
+        top: 0.25rem;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: $color-primary;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 0.25rem;
+    }
+
+    &:active {
+        transform: translateY(0.125rem);
+
+        &,
+        &::before {
+            transition-duration: 33ms;
+        }
+
+        &::before {
+            transform: translateY(-0.125rem);
+        }
+    }
+}
+</style>

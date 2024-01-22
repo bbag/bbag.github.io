@@ -1,0 +1,120 @@
+---
+const terminal = [
+    {
+        name: 'location',
+        values: [
+            'Atlanta GA'
+        ]
+    },
+    // {
+    //     name: 'role',
+    //     values: [
+    //         'Frontend Developer + UX/UI Designer'
+    //     ]
+    // },
+    {
+        name: 'design-skills',
+        values: [
+            'Adobe XD',
+            'Illustrator',
+            'Photoshop',
+            'Figma',
+        ]
+    },
+    {
+        name: 'dev-skills',
+        values: [
+            'HTML5',
+            'CSS3',
+            'SASS/SCSS',
+            'TypeScript',
+            'Vue/Nuxt',
+            'React/Next.js',
+            'Astro',
+            'Node.js',
+            'Tailwind',
+            'MongoDB',
+            'Babylon.js',
+            'WordPress',
+            'Vite'
+        ]
+    },
+    {
+        name: 'learning',
+        values: [
+            'WebGL Shaders',
+            'Three.js',
+            'Svelte'
+        ]
+    }
+]
+---
+<pre class="terminal"><span class="terminal--selector">#BillyBaggerman</span> &#123;
+{terminal.map(item => <div class="terminal--line"><span class="terminal--property">{item.name}</span>: <span class="terminal--value">{item.values.join(', ')}</span>;</div>)}&#125;</pre>
+
+<style lang="scss">
+@import '@/styles/_Variables.scss';
+
+.terminal {
+    animation-delay: 225ms;
+    background: #282C34;
+    border-radius: 0.75rem;
+    color: #ABB2BF;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    padding: 1.5rem;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: pre-wrap;
+}
+
+.terminal::after {
+    color: #FFF;
+    content: 'CSS';
+    font-size: 0.75em;
+    opacity: 0.4;
+    position: absolute;
+    right: 0.75em;
+    top: 0.75em;
+}
+
+.terminal--line {
+    padding-left: 2.5em;
+    text-indent: -1.25em;
+}
+
+.terminal--selector {
+    color: #61AFEF;
+}
+
+.terminal--property {
+    color: #E06C75;
+}
+
+.terminal--value {
+    color: #98C379;
+}
+
+// md: 768px
+@media (min-width: $breakpoint-sm) {
+    .terminal {
+        font-size: 0.875rem;
+    }
+}
+
+// xxl: 1472px
+@media (min-width: $breakpoint-xl) {
+    .terminal {
+        font-size: 1rem;
+    }
+}
+
+/* xxxl: 1984px */
+@media screen and (min-width: $breakpoint-xxl) {
+    .terminal {
+        font-size: 1.125rem;
+    }
+}
+</style>

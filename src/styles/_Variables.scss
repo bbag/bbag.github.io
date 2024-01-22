@@ -1,0 +1,36 @@
+// Colors
+$color-danger: rgb(217, 54, 62);
+$color-danger-dark: scale-color($color-danger, $lightness: -10%, $saturation: -15%);
+$color-danger-faint: scale-color($color-danger, $lightness: 90%, $saturation: -5%);
+
+$color-divider: #C4C6CA;
+$color-divider-dark: #A0A3A8;
+
+$color-info: rgb(22, 120, 224);
+$color-info-dark: scale-color($color-info, $lightness: -10%, $saturation: -15%);
+$color-info-faint: scale-color($color-info, $lightness: 90%, $saturation: -5%);
+
+$color-primary: #0072CF;
+$color-primary-dark: scale-color($color-primary, $lightness: -10%, $saturation: -15%);
+$color-primary-faint: scale-color($color-primary, $lightness: 90%, $saturation: -5%);
+
+$color-text: #282C34;
+$color-text-light: scale-color($color-text, $lightness: 10%);
+
+// Fonts
+$font-main: 'Work Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+// Breakpoints
+$breakpoint-xs: 34rem; // 544px
+$breakpoint-sm: 48rem; // 768px
+$breakpoint-md: 64rem; // 1024px
+$breakpoint-lg: 80rem; // 1280px
+$breakpoint-xl: 96rem; // 1536px
+$breakpoint-xxl: 112rem; // 1792px
+
+// Root CSS vars
+// :root {
+//     --animation-pop-in: pop-in 1.8s cubic-bezier(0.19, 1, 0.22, 1) both;
+//     --animation-slide-in-centered: slide-in-centered 1.8s cubic-bezier(0.19, 1, 0.22, 1) both;
+//     --font-main: 'DM Sans', system-ui, sans-serif;
+// }

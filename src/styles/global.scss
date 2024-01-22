@@ -1,0 +1,19 @@
+@use './Variables';
+@use './Fonts';
+@use './Reset';
+@use './Utility';
+
+body {
+    background: #F2F5FB;
+}
+
+.line-icon {
+    color: inherit;
+    fill: none;
+    height: 1.5rem;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    width: 1.5rem;
+}

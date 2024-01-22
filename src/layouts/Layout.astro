@@ -1,0 +1,86 @@
+---
+import '@/styles/global.scss'
+import Nav from '@/components/blocks/Nav.astro'
+
+interface Props {
+    title: string
+}
+
+const { title } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Astro description" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body>
+        <div class="layout">
+            <Nav />
+            <div class="nav-shadow"></div>
+            <main>
+                <slot />
+            </main>
+        </div>
+    </body>
+</html>
+
+<style lang="scss" is:global>
+$transition-time: 250ms;
+$transition-func: cubic-bezier(0.1, 0, 0.4, 1);
+
+$left-nav-buffer: 8.125rem;
+$content-padding: 2rem;
+
+main {
+    display: grid;
+    grid-template-columns:
+        [full-start] minmax(($left-nav-buffer + $content-padding), 4fr)
+        [content-start] min(100% - (($content-padding * 2) + $left-nav-buffer), 96rem) [content-end]
+        minmax($content-padding, 3fr) [full-end];
+}
+
+main > :not(.full-width),
+.full-width > :not(.full-width) {
+    grid-column: content;
+}
+
+main > .full-width {
+    display: grid;
+    grid-column: full;
+    grid-template-columns: inherit;
+}
+
+.layout > nav:hover,
+.layout > nav:focus-within {
+
+    & ~ main {
+        filter: blur(0.5rem);
+    }
+
+    & ~ .nav-shadow {
+        background: rgba(10, 20, 40, 0.2);
+    }
+}
+
+main {
+    filter: blur(0);
+    // margin: 0 auto;
+    // max-width: 96rem;
+    transition: filter $transition-time $transition-func;
+}
+
+.nav-shadow {
+    background: rgba(10, 20, 40, 0);
+    inset: 0;
+    position: fixed;
+    pointer-events: none;
+    transition: background-color $transition-time $transition-func;
+    z-index: 2;
+}
+</style>

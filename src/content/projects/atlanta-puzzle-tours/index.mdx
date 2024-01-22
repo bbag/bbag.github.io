@@ -1,0 +1,67 @@
+---
+title: Atlanta Puzzle Tours
+date: 2023-10-01
+description: A fun side project that I created to help people explore Atlanta.
+image: { src: './thumbnail-apt.png', alt: 'APT hero' }
+type: project
+tech: ['HTML', 'CSS', 'TypeScript', 'Vue', 'Astro', 'Node.js', 'MongoDB', 'Stripe', 'LogSnag', 'Nodemailer', 'Vercel']
+links: [
+  { label: 'github', href: 'https://github.com' },
+  { label: 'demo', href: 'https://google.com' }
+]
+priority: high
+---
+
+import { Image } from 'astro:assets'
+import Cols from '@/components/blocks/Cols.astro'
+import apt1 from './apt1.png';
+import apt2 from './apt2.png';
+import apt3 from './apt3.png';
+import apt4 from './apt4.png';
+
+## Overview
+
+Released in 2022 and revamped in 2023, Atlanta Puzzle Tours is a side project my wife and I started for fun, where we create self-guided tours through interesting parts of Atlanta.
+
+**The fun twist:** users must solve a series of puzzles and riddles along the way in order to unlock each new step. It’s basically brainteasers, trivia, and outdoor fun all in one!
+
+<Cols cols="4">
+    <a href={apt1.src}>
+        <Image
+            src={apt1}
+            width="320"
+            height="320"
+            alt=""
+        />
+    </a>
+    <a href={apt2.src}>
+        <Image
+            src={apt2}
+            width="320"
+            height="320"
+            alt=""
+        />
+    </a>
+    <a href={apt3.src}>
+        <Image
+            src={apt3}
+            width="320"
+            height="320"
+            alt=""
+        />
+    </a>
+    <a href={apt4.src}>
+        <Image
+            src={apt4}
+            width="320"
+            height="320"
+            alt=""
+        />
+    </a>
+</Cols>
+
+I created the entire project — the concept, logo, website UI design, puzzle logic, APIs and underlying architecture, the backend reporting dashboard, everything — from scratch, and it’s been a blast seeing how much fun people have with it! 😁
+
+The project took inspiration from Jackbox Games, where any number of players can join using a randomly generated 4-digit code, which lasts for 48 hours. Then, as players solve each puzzle and continue through the tour, their collective progress is saved all the way to the end.
+
+To help manage the project and keep track of tours, players, feedback, and any reported problems, I also create a backend dashboard to query the data for all the tours from the MongoDB database and display a table and charts with relevant data for each tour.

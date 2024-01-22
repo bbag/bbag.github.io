@@ -1,0 +1,43 @@
+---
+interface Props {
+    heading: string
+    subheading?: string
+}
+
+const { heading, subheading } = Astro.props
+---
+
+<div>
+    <h2 class="section-heading">{ heading }</h2>
+    {subheading && (
+        <p class="section-subheading">{ subheading }</p>
+    )}
+    <hr class="section-hr" />
+</div>
+
+<style lang="scss">
+@import '@/styles/_Variables.scss';
+
+div {
+    margin-top: 2rem;
+}
+
+.section-heading {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.section-subheading {
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.section-hr {
+    background: rgba(0, 20, 40, 0.1);
+    border: 0;
+    border-radius: 1rem;
+    height: 0.25rem;
+    margin: 2rem auto;
+    width: 14rem;
+}
+</style>

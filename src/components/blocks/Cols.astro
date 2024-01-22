@@ -1,0 +1,74 @@
+---
+interface Props {
+    cols?: number;
+}
+
+const { cols } = Astro.props as Props;
+---
+
+<div class="cols" data-cols={cols || 1}>
+    <slot />
+</div>
+
+<style lang="scss">
+    .cols {
+        display: grid;
+        flex-wrap: wrap;
+        gap: 1rem;
+        grid-template-columns: 1fr;
+        justify-content: center;
+        margin: 2rem 0;
+    }
+
+    .cols[data-cols='1'] {
+        grid-template-columns: 1fr;
+    }
+
+    .cols[data-cols='2'] {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cols[data-cols='3'] {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cols[data-cols='4'] {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    // sm: 576px
+    @media (min-width: 36em) {
+        .cols[data-cols='4'] {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    // md: 768px
+    @media (min-width: 48em) {
+        .cols {
+            margin: 4rem 0;
+        }
+    }
+
+    // lg: 992px
+    @media (min-width: 62em) {
+        .cols {
+            gap: 2rem;
+            margin: 4rem -4rem;
+        }
+    }
+
+    // xl: 1280px
+    @media (min-width: 80em) {
+        .cols {
+            margin: 4rem -8rem;
+        }
+    }
+
+    // xxl: 1472px
+    @media (min-width: 92em) {
+        .cols {
+            margin: 4rem -12rem;
+        }
+    }
+</style>
