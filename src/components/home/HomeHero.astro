@@ -60,8 +60,12 @@ section {
     align-content: center;
     display: grid;
     gap: 4rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr);
     min-height: 100vh;
+
+    @media (min-width: $breakpoint-sm) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .col-left {

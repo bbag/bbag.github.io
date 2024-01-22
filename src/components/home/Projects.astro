@@ -122,6 +122,37 @@ section {
     // background:;
 }
 
+.line-icon-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.line-icon {
+    .project-link & {
+        background: rgba(255, 255, 255, 0.75);
+        border-radius: 100vw;
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 20, 40, 0.15);
+        color: var(--color-primary, #222325);
+        height: 2.5rem;
+        opacity: 0;
+        padding: 0.5rem;
+        transition: opacity $transition-func, transform $transition-func;
+        transform: scale(0.15);
+        width: 2.5rem;
+    }
+
+    @media (hover: hover) {
+        .project-link:hover &,
+        .project-link:focus-within & {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
+
 // ---------------------------------------------------------- //
 // Work layout state                                          //
 // ---------------------------------------------------------- //
@@ -220,15 +251,16 @@ input[name='projects-layout-radios'] {
         display: grid;
         margin-left: -7.5%;
         margin-right: -7.5%;
+        transition: transform $transition-func;
 
         &:hover,
         &:focus-within {
             outline: none;
+            transform: scale(1.125);
             z-index: 1;
 
             & .project-link__outer {
                 background: rgba(0, 48, 96, 0.06);
-                transform: scale(1.125);
             }
 
             & .project-link__inner {
@@ -249,8 +281,7 @@ input[name='projects-layout-radios'] {
     & .project-link__outer {
         aspect-ratio: 1;
         background: rgba(0, 16, 40, 0.2);
-        clip-path: url(#hexagon-clip-mask);
-        transition: background-color $transition-func, transform $transition-func;
+        transition: background-color $transition-func;
     }
 
     & .project-link__inner {
@@ -273,6 +304,7 @@ input[name='projects-layout-radios'] {
         width: 100%;
     }
 
+    // below 576px
     @media (max-width: 35.999rem) {
         & {
             grid-template-columns: repeat(2, 1fr);
@@ -283,6 +315,7 @@ input[name='projects-layout-radios'] {
         }
     }
 
+    // 576px to 1279px
     @media (min-width: 36rem) and (max-width: 79.999rem) {
         & {
             grid-template-columns: repeat(3, 1fr);
@@ -294,8 +327,8 @@ input[name='projects-layout-radios'] {
         }
     }
 
-    // md: 768px
-    @media (min-width: 80em) {
+    // 1280px and above
+    @media (min-width: 80rem) {
         & {
             grid-template-columns: repeat(5, 1fr);
             padding: 0 4rem;

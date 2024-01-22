@@ -13,9 +13,10 @@ const { title } = Astro.props
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <!-- SEO stuff -->
         <title>{title}</title>
-        <meta name="viewport" content="width=device-width" />
         <meta name="description" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer" />
         <meta name="title" property="og:title" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer" />
         <meta property="og:type" content="Website" />
@@ -42,6 +43,8 @@ const { title } = Astro.props
 </html>
 
 <style lang="scss" is:global>
+@import '@/styles/_Variables.scss';
+
 $transition-time: 250ms;
 $transition-func: cubic-bezier(0.1, 0, 0.4, 1);
 
@@ -51,9 +54,9 @@ $content-padding: 2rem;
 main {
     display: grid;
     grid-template-columns:
-        [full-start] minmax(($left-nav-buffer + $content-padding), 4fr)
-        [content-start] min(100% - (($content-padding * 2) + $left-nav-buffer), 96rem) [content-end]
-        minmax($content-padding, 3fr) [full-end];
+        [full-start] $content-padding
+        [content-start] min(100% - ($content-padding * 2), 96rem) [content-end]
+        $content-padding [full-end];
 }
 
 main > :not(.full-width),
@@ -67,15 +70,36 @@ main > .full-width {
     grid-template-columns: inherit;
 }
 
-.layout > nav:hover,
-.layout > nav:focus-within {
+@media (max-width: ($breakpoint-sm - 0.001rem)) {
+    .layout > nav.nav-open {
+        & ~ main {
+            filter: blur(0.5rem);
+        }
 
-    & ~ main {
-        filter: blur(0.5rem);
+        & ~ .nav-shadow {
+            background: rgba(10, 20, 40, 0.2);
+        }
+    }
+}
+
+@media (min-width: $breakpoint-sm) {
+    .layout > nav:hover,
+    .layout > nav:focus-within {
+
+        & ~ main {
+            filter: blur(0.5rem);
+        }
+
+        & ~ .nav-shadow {
+            background: rgba(10, 20, 40, 0.2);
+        }
     }
 
-    & ~ .nav-shadow {
-        background: rgba(10, 20, 40, 0.2);
+    main {
+        grid-template-columns:
+            [full-start] minmax(($left-nav-buffer + $content-padding), 4fr)
+            [content-start] min(100% - (($content-padding * 2) + $left-nav-buffer), 96rem) [content-end]
+            minmax($content-padding, 3fr) [full-end];
     }
 }
 
@@ -90,8 +114,11 @@ main {
     background: rgba(10, 20, 40, 0);
     inset: 0;
     position: fixed;
-    pointer-events: none;
     transition: background-color $transition-time $transition-func;
     z-index: 2;
+    
+    @media (min-width: $breakpoint-sm) {
+        pointer-events: none;
+    }
 }
 </style>
