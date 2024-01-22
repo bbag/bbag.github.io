@@ -13,11 +13,22 @@ const { title } = Astro.props
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="description" content="Astro description" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="generator" content={Astro.generator} />
+        <!-- SEO stuff -->
         <title>{title}</title>
+        <meta name="viewport" content="width=device-width" />
+        <meta name="description" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer" />
+        <meta name="title" property="og:title" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer" />
+        <meta property="og:type" content="Website" />
+        <!-- <meta name="image" property="og:image" content="https://bbag.github.io/img/thumbnail-portfolio.png" /> -->
+        <meta name="description" property="og:description" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer" />
+        <meta name="author" content="Billy Baggerman" />
+        <!-- Favicon stuff -->
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="shortcut icon" href="favicon.ico">
+        <!-- Astro stuff -->
+        <meta name="generator" content={Astro.generator} />
     </head>
     <body>
         <div class="layout">
