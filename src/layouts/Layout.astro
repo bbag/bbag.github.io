@@ -78,6 +78,7 @@ main > .full-width {
 
         & ~ .nav-shadow {
             background: rgba(10, 20, 40, 0.2);
+            pointer-events: auto;
         }
     }
 }
@@ -92,6 +93,7 @@ main > .full-width {
 
         & ~ .nav-shadow {
             background: rgba(10, 20, 40, 0.2);
+            pointer-events: auto;
         }
     }
 
@@ -113,12 +115,9 @@ main {
 .nav-shadow {
     background: rgba(10, 20, 40, 0);
     inset: 0;
+    pointer-events: none;
     position: fixed;
     transition: background-color $transition-time $transition-func;
     z-index: 2;
-    
-    @media (min-width: $breakpoint-sm) {
-        pointer-events: none;
-    }
 }
 </style>
