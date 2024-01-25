@@ -50,7 +50,7 @@ $transition-time: 250ms;
 $transition-func: cubic-bezier(0.1, 0, 0.4, 1);
 
 $left-nav-buffer: 8.125rem;
-$layout-padding: 4rem;
+$layout-padding: 2rem;
 
 main {
     display: grid;
@@ -58,6 +58,25 @@ main {
         [full-start] $layout-padding
         [content-start] min(100% - ($layout-padding * 2), 96rem) [content-end]
         $layout-padding [full-end];
+
+    & > *:first-child {
+        padding-top: 6rem;
+    }
+
+    @media (min-width: $breakpoint-xs) {
+        $layout-padding: 4rem;
+
+        grid-template-columns:
+            [full-start] $layout-padding
+            [content-start] min(100% - ($layout-padding * 2), 96rem) [content-end]
+            $layout-padding [full-end];
+    }
+
+    @media (min-width: $breakpoint-sm) {
+        & > *:first-child {
+            padding-top: 0rem;
+        }
+    }
 }
 
 main > :not(.full-width),
@@ -112,8 +131,6 @@ main > .full-width {
 
 main {
     filter: blur(0);
-    // margin: 0 auto;
-    // max-width: 96rem;
     transition: filter $transition-time $transition-func;
 }
 
@@ -135,15 +152,24 @@ main {
     display: grid;
     grid-template-columns:
         [content-full-start] minmax(($content-padding), 1fr)
-        [content-breakout-start] minmax(0, $content-breakout-size)
+        [content-breakout-start]
         [content-main-start] min(100% - (($content-padding * 2) + $left-nav-buffer), 46rem) [content-main-end]
-        minmax(0, $content-breakout-size) [content-breakout-end]
+        [content-breakout-end]
         minmax($content-padding, 1fr) [content-full-end];
 
     & p,
     & ul,
     & ol {
         font-size: 1.25rem;
+    }
+
+    @media (min-width: $breakpoint-sm) {
+        grid-template-columns:
+        [content-full-start] minmax(($content-padding), 1fr)
+        [content-breakout-start] minmax(0, $content-breakout-size)
+        [content-main-start] min(100% - (($content-padding * 2) + $left-nav-buffer), 46rem) [content-main-end]
+        minmax(0, $content-breakout-size) [content-breakout-end]
+        minmax($content-padding, 1fr) [content-full-end];
     }
 }
 
@@ -161,17 +187,4 @@ main {
     grid-column: full-width;
     grid-template-columns: inherit;
 }
-
-// [class*='content-col'] {
-//     margin-left: auto;
-//     margin-right: auto;
-// }
-
-// .content-col--md {
-//     max-width: 96rem;
-// }
-
-// .content-col--sm {
-//     max-width: 56rem;
-// }
 </style>

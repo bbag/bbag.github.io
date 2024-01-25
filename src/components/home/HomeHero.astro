@@ -4,8 +4,7 @@ import DotsBackground from '@/assets/img/dots-background.svg'
 ---
 
 <section class="full-width">
-    <!-- Hi -->
-    <div class="home-hero content-col--md">
+    <div class="home-hero">
         <div class="col-left">
             <div class="headings">
                 <h1>Hey, I'm Billy!</h1>
@@ -24,6 +23,7 @@ import DotsBackground from '@/assets/img/dots-background.svg'
 @import '@/styles/_Variables.scss';
 
 section {
+    padding-bottom: 6rem;
     position: relative;
 
     &::after,
@@ -54,6 +54,10 @@ section {
         mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
         top: calc(100% - 4rem);
     }
+
+    @media (min-width: $breakpoint-sm) {
+        padding-bottom: 6rem;
+    }
 }
 
 .home-hero {
@@ -61,7 +65,11 @@ section {
     display: grid;
     gap: 4rem;
     grid-template-columns: minmax(0, 1fr);
-    min-height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 92rem;
+    min-height: calc(100vh - 16rem);
+    padding-top: 4rem;
 
     @media (min-width: $breakpoint-sm) {
         grid-template-columns: repeat(2, minmax(0, 1fr));

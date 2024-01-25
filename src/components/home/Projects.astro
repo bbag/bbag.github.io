@@ -20,12 +20,12 @@ function priorityValue(priority: string) {
 
 const layoutButtonPaths = [
     {
-        name: 'hexagons',
-        html: '<path d="M4 18v-5l4 -2l4 2v5l-4 2z" /><path d="M8 11v-5l4 -2l4 2v5" /><path d="M12 13l4 -2l4 2v5l-4 2l-4 -2" />'
-    },
-    {
         name: 'squares',
         html: '<path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />'
+    },
+    {
+        name: 'hexagons',
+        html: '<path d="M4 18v-5l4 -2l4 2v5l-4 2z" /><path d="M8 11v-5l4 -2l4 2v5" /><path d="M12 13l4 -2l4 2v5l-4 2l-4 -2" />'
     },
     {
         name: 'list',
@@ -42,7 +42,7 @@ const layoutButtonPaths = [
             name="projects-layout-radios"
             id={`projects-layout-${radio.name}`}
             value={radio.name}
-            checked={radio.name === 'hexagons'}
+            checked={radio.name === layoutButtonPaths[0].name}
             class="visually-hiddenx"
         />
     ))}
@@ -381,7 +381,7 @@ input[name='projects-layout-radios'] {
 #projects-layout-squares:checked ~ .projects-list {
     display: grid;
     gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     max-width: initial;
 
     & .project {
@@ -391,13 +391,16 @@ input[name='projects-layout-radios'] {
         box-shadow: 0 1px 2px rgba(0, 10, 20, 0.08);
         display: grid;
         grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto minmax(0, 1fr);
         padding: 2rem;
     }
 
     & .project-link__outer {
-        border-radius: 0.375rem;
-        box-shadow: 0 0.25rem 0.75rem rgba(0, 20, 40, 0.06);
+        border: 0.125rem solid #FFF;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.25rem 0.75rem rgba(0, 20, 40, 0.08);
         overflow: hidden;
+        transition: transform $transition-func;
     }
 
     & .project-link {
@@ -412,10 +415,30 @@ input[name='projects-layout-radios'] {
         transition: filter $transition-func, transform $transition-func;
     }
 
-    & .project-link:hover .project-img,
-    & .project-link:focus-within .project-img {
-        filter: blur(0.5rem);
-        transform: scale(1.05);
+    & .project-link:hover,
+    & .project-link:focus-within {
+        outline: none;
+
+        & .project-link__outer {
+            transform: scale(0.95);
+        }
+
+        & .project-img {
+            filter: blur(0.5rem);
+            transform: scale(1.15);
+        }
+    }
+
+    @media (min-width: $breakpoint-sm) {
+        & {
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        }
+    }
+
+    @media (min-width: $breakpoint-md) {
+        & {
+            grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+        }
     }
 }
 </style>
