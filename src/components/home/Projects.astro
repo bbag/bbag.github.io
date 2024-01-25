@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
 import { Image } from 'astro:assets'
 import { techIcon } from '@/utils/techIcon'
+import KeyboardButton from '@/components/base/KeyboardButton.astro'
 import SectionHeading from '@/components/blocks/SectionHeading.astro'
 
 type ProjectType = CollectionEntry<'projects'>
@@ -20,7 +21,7 @@ function priorityValue(priority: string) {
 
 const layoutButtonPaths = [
     {
-        name: 'squares',
+        name: 'cards',
         html: '<path d="M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />'
     },
     {
@@ -117,6 +118,9 @@ const layoutButtonPaths = [
                     ))}</div>
                     <p>{item.data.description}</p>
                 </div>
+                <KeyboardButton href={`/projects/${item.slug}`} size="lg" fullWidth="true">
+                    Project Details
+                </KeyboardButton>
             </li>))
         }
     </ol>
@@ -211,7 +215,7 @@ input[name='projects-layout-radios'] {
 }
 
 #projects-layout-hexagons:checked ~ .projects-layout [data-layout="hexagons"],
-#projects-layout-squares:checked ~ .projects-layout [data-layout="squares"],
+#projects-layout-cards:checked ~ .projects-layout [data-layout="cards"],
 #projects-layout-list:checked ~ .projects-layout [data-layout="list"] {
     background-color: #F2F5FB;
     color: $color-primary;
@@ -224,7 +228,7 @@ input[name='projects-layout-radios'] {
 // #projects-layout-list:checked ~ .projects-list {
 .projects-list {
     list-style-type: none;
-    margin: 0 auto;
+    margin: 0 auto 2rem;
     max-width: $breakpoint-md;
     padding: 0;
 }
@@ -375,10 +379,10 @@ input[name='projects-layout-radios'] {
 }
 
 // ---------------------------------------------------------- //
-// Squares layout                                             //
+// Cards layout                                               //
 // ---------------------------------------------------------- //
 
-#projects-layout-squares:checked ~ .projects-list {
+#projects-layout-cards:checked ~ .projects-list {
     display: grid;
     gap: 2rem;
     grid-template-columns: minmax(0, 1fr);
@@ -439,6 +443,14 @@ input[name='projects-layout-radios'] {
         & {
             grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
         }
+    }
+}
+</style>
+
+<style lang="scss" is:inline>
+#projects-layout-hexagons:checked ~ .projects-list {
+    & .kbd-button {
+        display: none;
     }
 }
 </style>

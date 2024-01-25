@@ -1,7 +1,7 @@
 ---
 title: BJJ Training Tracker
 date: 2023-10-08
-description: Some project description
+description: A personal goal setting + class tracking + injury heatmap app for my BJJ training.
 image: { src: './thumbnail-bjjtracker.png', alt: 'Project 1' }
 type: project
 tech: ['HTML', 'CSS', 'TypeScript', 'React']
@@ -12,12 +12,6 @@ links: [
 priority: high
 ---
 
-# Project #1
+## Description coming soon...
 
-This is the first project!
-
-<div class="content-breakout">
-
-This is some breakout content
-
-</div>
+Most of these project pages are still under construction... but fun things are coming soon! 👀

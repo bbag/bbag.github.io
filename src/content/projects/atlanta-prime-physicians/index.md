@@ -12,6 +12,6 @@ links: [
 priority: low
 ---
 
-## Awesome
+## Description coming soon...
 
-It was awesome.
+Most of these project pages are still under construction... but fun things are coming soon! 👀

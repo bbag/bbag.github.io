@@ -1,7 +1,7 @@
 ---
-title: Axway Griffin App
+title: Axway’s Griffin App
 date: 2022-10-03
-description: Some project description
+description: Designs for Axway’s internal mobile app for employees returning to office.
 image: { src: './thumbnail-officescheduler.png', alt: 'Project 1' }
 type: project
 tech: ['HTML', 'CSS', 'TypeScript', 'Vue']
@@ -12,6 +12,6 @@ links: [
 priority: medium
 ---
 
-# Project #1
+## Description coming soon...
 
-This is the first project!
+Most of these project pages are still under construction... but fun things are coming soon! 👀

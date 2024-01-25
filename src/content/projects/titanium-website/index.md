@@ -1,7 +1,7 @@
 ---
-title: Titanium Website
+title: Axway’s Titanium Website
 date: 2023-10-01
-description: Description coming soon.
+description: A total refresh and rebuild of the Titanium mobile app framework’s website.
 image: { src: './thumbnail-titanium.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS', 'JavaScript']
@@ -12,6 +12,6 @@ links: [
 priority: high
 ---
 
-## Awesome
+## Description coming soon...
 
-It was awesome.
+Most of these project pages are still under construction... but fun things are coming soon! 👀

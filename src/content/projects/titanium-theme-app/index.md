@@ -1,7 +1,7 @@
 ---
 title: Titanium Theme Creator App
 date: 2023-10-01
-description: A fun side project that I created to help people explore Atlanta.
+description: A theme code generator and previewer for mobile apps built with Titanium.
 image: { src: './thumbnail-titaniumthemepicker.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS', 'JavaScript', 'Vue']
@@ -12,6 +12,6 @@ links: [
 priority: medium
 ---
 
-## Awesome
+## Description coming soon...
 
-It was awesome.
+Most of these project pages are still under construction... but fun things are coming soon! 👀

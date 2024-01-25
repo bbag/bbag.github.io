@@ -1,7 +1,7 @@
 ---
 title: Rank Choice Voting Visualization
 date: 2020-05-11
-description: A fun side project that I created to help people explore Atlanta.
+description: A concept educational visualization of R.C.V. built for Better Ballot Georgia.
 image: { src: './thumbnail-rcv.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS', 'JavaScript', 'Vue']
@@ -12,6 +12,6 @@ links: [
 priority: low
 ---
 
-## Awesome
+## Description coming soon...
 
-It was awesome.
+Most of these project pages are still under construction... but fun things are coming soon! 👀

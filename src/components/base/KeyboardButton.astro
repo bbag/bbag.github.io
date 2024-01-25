@@ -1,0 +1,135 @@
+---
+// Types & interfaces
+interface Props {
+    fullWidth?: boolean
+    href?: string
+    size?: 'sm' | 'md' | 'lg'
+}
+
+import LineIcon from './LineIcon.astro'
+
+const {
+    disabled,
+    fullWidth,
+    href,
+    id,
+    size,
+    type,
+    variant,
+    ...attrs
+} = Astro.props as Props
+---
+
+{href
+    ? <a
+        class="kbd-button"
+        href={href}
+        data-size={size}
+        data-full-width={fullWidth}
+        {...attrs}
+    >
+        <slot />
+    </a>
+    : <button
+        class="kbd-button"
+        data-size={size}
+        data-full-width={fullWidth}
+        {...attrs}
+    >
+        <slot />
+    </button>
+}
+
+<style lang="scss">
+@import '@/styles/_Variables.scss';
+
+$button-border-radius: 0.375em;
+
+.kbd-button {
+    background: transparent;
+    border: 0;
+    border-radius: $button-border-radius;
+    color: $color-text-light;
+    font-size: 0.8125em;
+    line-height: 1;
+    padding: 0.5em 0.875em 0.375em;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #FFF;
+    text-transform: uppercase;
+    z-index: 1;
+    
+    &,
+    &::after,
+    &::before {
+        transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1), transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    &::after,
+    &::before {
+        border: 1px solid #BFC8D6;
+        border-radius: $button-border-radius;
+        box-sizing: content-box;
+        content: '';
+        height: 100%;
+        left: -1px;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+    }
+    
+    &::after {
+        background: linear-gradient(180deg, #FFFFFF 0%, #E5E9EF 100%);
+        top: 0;
+    }
+    
+    &::before {
+        background: #D6DEEA;
+        box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1), 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.06);
+        top: 0.25rem;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: $color-primary;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $color-primary;
+        outline-offset: 0.25rem;
+    }
+
+    &:active {
+        transform: translateY(0.125rem);
+
+        &,
+        &::before {
+            transition-duration: 33ms;
+        }
+
+        &::before {
+            transform: translateY(-0.125rem);
+        }
+    }
+
+    &[data-size='sm'] {
+        padding: 0.3125em 0.5em 0.1875em;
+    }
+
+    &[data-size='lg'] {
+        font-size: 0.875em;
+        padding: 0.75em 1.25em 0.625em;
+    }
+
+    &[data-full-width='true'] {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+</style>

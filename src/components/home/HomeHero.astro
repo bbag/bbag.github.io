@@ -1,5 +1,7 @@
 ---
 import Terminal from '@/components/home/Terminal.astro'
+import KeyboardButton from '@/components/base/KeyboardButton.astro'
+
 import DotsBackground from '@/assets/img/dots-background.svg'
 ---
 
@@ -10,11 +12,11 @@ import DotsBackground from '@/assets/img/dots-background.svg'
                 <h1>Hey, I'm Billy!</h1>
                 <h2>Frontend developer, UX/UI + Product Designer</h2>
             </div>
-            <p>From <button class="kbd-button">sketch</button> to <button class="kbd-button">wireframe</button> to <button class="kbd-button">production</button>, I bring web apps, products, and sites to life with code.</p>
+            <p>From <KeyboardButton size="sm">sketch</KeyboardButton> to <KeyboardButton size="sm">wireframe</KeyboardButton> to <KeyboardButton size="sm">production</KeyboardButton>, I bring web apps, products, and sites to life with code.</p>
             <Terminal />
         </div>
         <div class="col-right">
-            <p><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg><br />Hey stranger!<br /><br />It looks like you stumbled upon this portolfio at an interesting time... everything’s under construction at the moment, but should be polished up soon! 😅<br /><br />(As a teaser, this section here will have a snazzy, interactive graphic of a mobile app UI.)</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg><br />Hey stranger!<br /><br />It looks like you stumbled upon this portolfio at an interesting time... as of January 24th, 2024, everything’s under construction for a total revamp but should be polished up soon! 😅<br /><br />(As a teaser, this section here will have a snazzy, interactive graphic of a mobile app UI.)</p>
         </div>
     </div>
 </section>
@@ -102,77 +104,5 @@ h1 {
 
 p {
     font-size: 1.625rem;
-}
-
-.kbd-button {
-    background: transparent;
-    border: 0;
-    border-radius: 0.5rem;
-    box-sizing: content-box;
-    color: $color-text-light;
-    font-size: 0.8125em;
-    line-height: 1;
-    padding: 0.3125em 0.5em 0.1875em;
-    position: relative;
-    text-transform: uppercase;
-    text-shadow: 0 1px 0 #FFF;
-    z-index: 1;
-    
-    &,
-    &::after,
-    &::before {
-        transition: color 200ms cubic-bezier(0.25, 1, 0.5, 1), transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    
-    &::after,
-    &::before {
-        border: 1px solid #BFC8D6;
-        border-radius: 0.5rem;
-        box-sizing: content-box;
-        content: '';
-        height: 100%;
-        left: -1px;
-        position: absolute;
-        width: 100%;
-        z-index: -1;
-    }
-    
-    &::after {
-        background: linear-gradient(180deg, #FFFFFF 0%, #E5E9EF 100%);
-        top: 0;
-    }
-    
-    &::before {
-        background: #D6DEEA;
-        box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1), 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.06);
-        top: 0.25rem;
-    }
-
-    &:focus {
-        outline: none;
-    }
-
-    &:hover,
-    &:focus-visible {
-        color: $color-primary;
-    }
-
-    &:focus-visible {
-        outline: 2px solid $color-primary;
-        outline-offset: 0.25rem;
-    }
-
-    &:active {
-        transform: translateY(0.125rem);
-
-        &,
-        &::before {
-            transition-duration: 33ms;
-        }
-
-        &::before {
-            transform: translateY(-0.125rem);
-        }
-    }
 }
 </style>

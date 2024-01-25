@@ -1,7 +1,7 @@
 ---
 title: Simple Kitchen Website Design
 date: 2023-10-01
-description: A fun side project that I created to help people explore Atlanta.
+description: A concept design for a recipe and blog site for an early freelance client.
 image: { src: './thumbnail-simplekitchen.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS']
@@ -12,6 +12,6 @@ links: [
 priority: medium
 ---
 
-## Awesome
+## Description coming soon...
 
-It was awesome.
+Most of these project pages are still under construction... but fun things are coming soon! 👀
