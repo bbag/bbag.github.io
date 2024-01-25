@@ -1,5 +1,5 @@
 ---
-title: BJJ Tracker
+title: BJJ Training Tracker
 date: 2023-10-08
 description: Some project description
 image: { src: './thumbnail-bjjtracker.png', alt: 'Project 1' }
@@ -15,3 +15,9 @@ priority: high
 # Project #1
 
 This is the first project!
+
+<div class="content-breakout">
+
+This is some breakout content
+
+</div>
