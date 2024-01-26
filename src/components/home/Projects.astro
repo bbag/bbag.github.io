@@ -36,7 +36,7 @@ const layoutButtonPaths = [
 ---
 
 <section>
-    <SectionHeading heading="Projects" subheading="A collection of some of the cooler things I’ve worked on." />
+    <SectionHeading heading="Projects" subheading="A collection of some of the cooler things I’ve worked on." id="projects" />
     {layoutButtonPaths.map((radio) => (
         <input
             type="radio"
@@ -118,7 +118,7 @@ const layoutButtonPaths = [
                     ))}</div>
                     <p>{item.data.description}</p>
                 </div>
-                <KeyboardButton href={`/projects/${item.slug}`} size="lg" fullWidth="true">
+                <KeyboardButton href={`/projects/${item.slug}`} size="lg" fullWidth={true}>
                     Project Details
                 </KeyboardButton>
             </li>))

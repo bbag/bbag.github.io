@@ -6,16 +6,10 @@ interface Props {
     size?: 'sm' | 'md' | 'lg'
 }
 
-import LineIcon from './LineIcon.astro'
-
 const {
-    disabled,
     fullWidth,
     href,
-    id,
     size,
-    type,
-    variant,
     ...attrs
 } = Astro.props as Props
 ---
@@ -54,6 +48,7 @@ $button-border-radius: 0.375em;
     line-height: 1;
     padding: 0.5em 0.875em 0.375em;
     position: relative;
+    text-align: center;
     text-decoration: none;
     text-shadow: 0 1px 0 #FFF;
     text-transform: uppercase;
