@@ -6,8 +6,7 @@ image: { src: './thumbnail-compressioncloset.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS', 'JavaScript', 'PHP', 'WordPress']
 links: [
-  { label: 'github', href: 'https://github.com' },
-  { label: 'demo', href: 'https://google.com' }
+  { label: 'view', href: 'https://www.thecompressioncloset.com' },
 ]
 priority: low
 ---

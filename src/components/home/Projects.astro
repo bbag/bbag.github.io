@@ -117,10 +117,17 @@ const layoutButtonPaths = [
                         />
                     ))}</div>
                     <p>{item.data.description}</p>
+                    <div class="project-buttons">
+                        <KeyboardButton href={`/projects/${item.slug}`} size="lg" fullWidth={true}>
+                            Details
+                        </KeyboardButton>
+                        {item.data.links?.map((link) => (
+                            <KeyboardButton href={link.href} size="lg" fullWidth={true}>
+                                {link.label}
+                            </KeyboardButton>))
+                        }
+                    </div>
                 </div>
-                <KeyboardButton href={`/projects/${item.slug}`} size="lg" fullWidth={true}>
-                    Project Details
-                </KeyboardButton>
             </li>))
         }
     </ol>
@@ -237,6 +244,11 @@ input[name='projects-layout-radios'] {
     display: grid;
     gap: 2rem;
     grid-template-columns: 20rem minmax(0, 1fr);
+}
+
+.project-buttons {
+    display: flex;
+    gap: 1rem;
 }
 
 .project-title {
@@ -433,6 +445,15 @@ input[name='projects-layout-radios'] {
         }
     }
 
+    & .project-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    & .project-buttons {
+        margin-top: auto;
+    }
+
     @media (min-width: $breakpoint-sm) {
         & {
             grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
@@ -448,6 +469,12 @@ input[name='projects-layout-radios'] {
 </style>
 
 <style lang="scss" is:inline>
+#projects-layout-cards:checked ~ .projects-list {
+    & .kbd-button {
+        // width: 100%;
+        flex: 1 0 auto;
+    }
+}
 #projects-layout-hexagons:checked ~ .projects-list {
     & .kbd-button {
         display: none;
