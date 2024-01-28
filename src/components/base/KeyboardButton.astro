@@ -1,6 +1,8 @@
 ---
+import type { HTMLAttributes } from 'astro/types'
+
 // Types & interfaces
-interface Props {
+interface Props extends HTMLAttributes<'button'> {
     fullWidth?: boolean
     href?: string
     isIcon?: boolean
