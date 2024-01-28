@@ -7,7 +7,8 @@ interface Props extends HTMLAttributes<'button'> {
     href?: string
     isIcon?: boolean
     size?: 'sm' | 'md' | 'lg'
-    target?: string
+    target?: string,
+    textAlign?: 'left' | 'center' | 'right'
 }
 
 const {
@@ -16,6 +17,7 @@ const {
     isIcon,
     size,
     target,
+    textAlign,
     ...attrs
 } = Astro.props as Props
 ---
@@ -28,6 +30,7 @@ const {
         data-full-width={fullWidth}
         data-is-icon={isIcon}
         target={target}
+        data-text-align={textAlign}
         {...attrs}
     >
         <slot />
@@ -37,6 +40,7 @@ const {
         data-size={size}
         data-full-width={fullWidth}
         data-is-icon={isIcon}
+        data-text-align={}
         {...attrs}
     >
         <slot />
@@ -141,6 +145,16 @@ $button-border-radius: 0.375em;
 
     &[data-is-icon] {
         padding: 0.5em;
+    }
+
+    &[data-text-align='left'] {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    &[data-text-align='right'] {
+        justify-content: flex-end;
+        text-align: right;
     }
 }
 </style>

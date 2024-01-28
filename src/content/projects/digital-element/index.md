@@ -6,8 +6,7 @@ image: { src: './thumbnail-digitalelement.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS', 'TypeScript', 'Vue', 'Astro']
 links: [
-  { label: 'github', href: 'https://github.com' },
-  { label: 'view', href: 'https://google.com' }
+  { label: 'view', href: 'https://www.digitalelement.com/geolocation' }
 ]
 priority: medium
 ---
