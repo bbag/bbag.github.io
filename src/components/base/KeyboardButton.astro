@@ -3,6 +3,7 @@
 interface Props {
     fullWidth?: boolean
     href?: string
+    isIcon?: boolean
     size?: 'sm' | 'md' | 'lg'
     target?: string
 }
@@ -10,6 +11,7 @@ interface Props {
 const {
     fullWidth,
     href,
+    isIcon,
     size,
     target,
     ...attrs
@@ -22,6 +24,7 @@ const {
         href={href}
         data-size={size}
         data-full-width={fullWidth}
+        data-is-icon={isIcon}
         target={target}
         {...attrs}
     >
@@ -31,6 +34,7 @@ const {
         class="kbd-button"
         data-size={size}
         data-full-width={fullWidth}
+        data-is-icon={isIcon}
         {...attrs}
     >
         <slot />
@@ -131,6 +135,10 @@ $button-border-radius: 0.375em;
         display: flex;
         justify-content: center;
         width: 100%;
+    }
+
+    &[data-is-icon] {
+        padding: 0.5em;
     }
 }
 </style>

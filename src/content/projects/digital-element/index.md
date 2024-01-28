@@ -7,7 +7,7 @@ type: project
 tech: ['HTML', 'CSS', 'TypeScript', 'Vue', 'Astro']
 links: [
   { label: 'github', href: 'https://github.com' },
-  { label: 'demo', href: 'https://google.com' }
+  { label: 'view', href: 'https://google.com' }
 ]
 priority: medium
 ---

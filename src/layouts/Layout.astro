@@ -50,7 +50,7 @@ $transition-time: 250ms;
 $transition-func: cubic-bezier(0.1, 0, 0.4, 1);
 
 $left-nav-buffer: 8.125rem;
-$layout-padding: 2rem;
+$layout-padding: 1.5rem;
 
 main {
     display: grid;
@@ -104,6 +104,8 @@ main > .full-width {
 }
 
 @media (min-width: $breakpoint-sm) {
+    $layout-padding: 2rem;
+
     .layout > nav:hover,
     .layout > nav:focus-within {
 

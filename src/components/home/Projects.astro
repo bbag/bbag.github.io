@@ -33,6 +33,19 @@ const layoutButtonPaths = [
         html: '<path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M4 14m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />'
     }
 ]
+
+const linkButtons = [
+    {
+        label: 'github',
+        svg: '<path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />',
+        title: 'GitHub'
+    },
+    {
+        label: 'view',
+        svg: '<path d="M10 6h-4a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-4" /><path d="M11 13l9 -9" /><path d="M15 4h5v5" />',
+        title: 'View'
+    }
+]
 ---
 
 <section>
@@ -118,14 +131,23 @@ const layoutButtonPaths = [
                     ))}</div>
                     <p>{item.data.description}</p>
                     <div class="project-buttons">
-                        <KeyboardButton href={`/projects/${item.slug}`} size="lg" fullWidth={true}>
+                        <KeyboardButton href={`/projects/${item.slug}`} size="lg" fullWidth={true} title="Project details">
                             Details
                         </KeyboardButton>
-                        {item.data.links?.map((link) => (
-                            <KeyboardButton href={link.href} size="lg" fullWidth={true}>
-                                {link.label}
-                            </KeyboardButton>))
-                        }
+                        {item.data.links?.map((link) => {
+                            const button = linkButtons.find((button) => button.label === link.label)
+                            return (
+                                <KeyboardButton
+                                    href={link.href}
+                                    size="lg"
+                                    fullWidth={true}
+                                    data-is-icon={true}
+                                    title={button?.title}
+                                >
+                                    {button?.svg ? <svg class="line-icon" width="24" height="24" viewBox="0 0 24 24" set:html={button.svg} /> : link.label}
+                                </KeyboardButton>
+                            )
+                        })}
                     </div>
                 </div>
             </li>))
@@ -468,16 +490,21 @@ input[name='projects-layout-radios'] {
 }
 </style>
 
-<style lang="scss" is:inline>
-#projects-layout-cards:checked ~ .projects-list {
-    & .kbd-button {
-        // width: 100%;
-        flex: 1 0 auto;
-    }
+<style is:inline>
+#projects-layout-cards:checked ~ .projects-list .kbd-button {
+    flex: 1 0 auto;
 }
-#projects-layout-hexagons:checked ~ .projects-list {
-    & .kbd-button {
-        display: none;
-    }
+
+#projects-layout-cards:checked ~ .projects-list .kbd-button[data-is-icon] {
+    flex: 0 0 2.5rem;
 }
+
+#projects-layout-cards:checked ~ .projects-list .kbd-button[data-is-icon] svg {
+    filter: drop-shadow(0 1px 0 #FFF);
+}
+
+#projects-layout-hexagons:checked ~ .projects-list .kbd-button {
+    display: none;
+}
+
 </style>

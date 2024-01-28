@@ -21,7 +21,6 @@ const projectsCollection = defineCollection({
         links: z.array(z.object({
             href: z.string().url(),
             label: z.enum([
-                'demo',
                 'github',
                 'view'
             ]),
