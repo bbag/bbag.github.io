@@ -65,16 +65,16 @@ function formatDate(date: WorkItemDate | 'present') {
 
 <section>
     <SectionHeading heading="Experience" subheading="I’m proud to have worked alongside some seriously incredible teams." id="experience" />
-    <ol class="company-list">
+    <ol class="experience-list">
         {work.map((item) => (
-            <li class="company-item">
-                <div class="company-header">
+            <li class="experience-item">
+                <div class="experience-header">
                     <a class="company-logo" href={item.href} rel="noopener noreferrer nofollow" target="_blank">
                         <Image src={item.logo} alt={`${item.company} logo`} role="presentation" />
                     </a>
                     <p class="role-title">{item.role}</p>
                 </div>
-                <p class="company-subheader">
+                <p class="experience-subheader">
                     <span class="company-name">{item.company}</span> &mdash; {formatDate(item.dateStart)} to {formatDate(item.dateEnd)}
                 </p>
                 <p class="role-description">{item.description}</p>
@@ -86,48 +86,31 @@ function formatDate(date: WorkItemDate | 'present') {
 <style lang="scss">
 @import '@/styles/_Variables.scss';
 
-$logo-icon-size: 4rem;
+$logo-icon-size: 2.5rem;
 $timeline-color: AFB8C6;
-$timeline-margin: 2rem;
+$timeline-margin: 1.5rem;
 $timeline-width: 0.125rem;
 
-.company-list {
+.experience-list {
     list-style-type: none;
     margin: 0 auto 4rem;
     max-width: 50rem;
     padding: 0 0 0 ($logo-icon-size + ($timeline-margin * 2) + $timeline-width);
+
+    @media (min-width: $breakpoint-xs) {
+        $timeline-margin: 2rem;
+
+        padding-left: ($logo-icon-size + ($timeline-margin * 2) + $timeline-width);
+    }
 }
 
-.company-item {
+.experience-item {
     position: relative;
 
     &:not(:last-child) {
         padding-bottom: 4rem;
     }
-
-    &::before {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2px" height="6px" viewBox="0 0 2 6" stroke-width="2" stroke="%23#{$timeline-color}" fill="none" stroke-linecap="round"><line x1="1" x2="1" y1="1" y2="2" /></svg>');
-        content: '';
-        height: 100%;
-        left: ($timeline-margin * -1);
-        position: absolute;
-        top: 0;
-        width: $timeline-width;
-    }
-
-    &::after {
-        background: #FFF;
-        border-radius: 1rem;
-        border: 1px solid ##{$timeline-color};
-        content: '';
-        height: 1.125rem;
-        left: ($timeline-margin * -1);
-        position: absolute;
-        top: 0.625rem;
-        transform: translateX(calc(-50% + ($timeline-width / 2)));
-        width: 1.125rem;
-    }
-
+    
     &:first-child::before {
         height: calc(100% - 1rem);
         top: 1rem;
@@ -136,31 +119,78 @@ $timeline-width: 0.125rem;
     &:last-child::before {
         height: 1rem;
     }
+
+    &::after,
+    &::before {
+        content: '';
+        left: ($timeline-margin * -1);
+        position: absolute;
+
+        @media (min-width: $breakpoint-xs) {
+            $timeline-margin: 2rem;
+
+            left: ($timeline-margin * -1);
+        }
+    }
+
+    &::after {
+        background: #FFF;
+        border-radius: 1rem;
+        border: 1px solid ##{$timeline-color};
+        content: '';
+        height: 1.125rem;
+        top: 0.625rem;
+        transform: translateX(calc(-50% + ($timeline-width / 2)));
+        width: 1.125rem;
+    }
+
+    &::before {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2px" height="6px" viewBox="0 0 2 6" stroke-width="2" stroke="%23#{$timeline-color}" fill="none" stroke-linecap="round"><line x1="1" x2="1" y1="1" y2="2" /></svg>');
+        content: '';
+        height: 100%;
+        top: 0;
+        width: $timeline-width;
+    }
 }
 
-.company-header {
+.experience-header {
     position: relative;
 }
 
 .company-logo {
     background: #FFF;
     border: 1px solid #DFE3E9;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     box-shadow: 0 1px 2px rgba(0, 10, 20, 0.08);
-    padding: 1.125rem;
+    padding: 0.5rem;
     position: absolute;
     right: 100%;
-    top: 50%;
+    top: 1.125rem;
     transform: translate(($timeline-margin * -2) + $timeline-width, -50%);
     user-select: none;
     width: $logo-icon-size;
+
+    @media (min-width: $breakpoint-xs) {
+        $logo-icon-size: 4rem;
+        $timeline-margin: 2rem;
+
+        border-radius: 1rem;
+        padding: 1.125rem;
+        transform: translate(($timeline-margin * -2) + $timeline-width, -50%);
+        width: $logo-icon-size;
+    }
 }
 
-.company-subheader {
+.experience-subheader {
     color: $color-text-light;
-    font-size: 1rem;
-    margin: 0 0 0.125rem;
+    font-size: 0.875rem;
+    margin: 0.5rem 0 0.125rem;
     text-transform: uppercase;
+
+    @media (min-width: $breakpoint-xs) {
+        font-size: 1rem;
+        margin-top: 0.25rem;
+    }
 }
 
 .company-name {
@@ -170,11 +200,20 @@ $timeline-width: 0.125rem;
 
 .role-title {
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    line-height: 1.2;
+
+    @media (min-width: $breakpoint-xs) {
+        font-size: 1.5rem;
+    }
 }
 
 .role-description {
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin: 1rem 0 0 0;
+
+    @media (min-width: $breakpoint-xs) {
+        font-size: 1.125rem;
+    }
 }
 </style>
