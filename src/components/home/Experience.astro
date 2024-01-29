@@ -1,0 +1,180 @@
+---
+import { Image } from 'astro:assets'
+import KeyboardButton from '@/components/base/KeyboardButton.astro'
+import SectionHeading from '@/components/blocks/SectionHeading.astro'
+
+import LogoAxway from '@/assets/logos/logo-axway-icon.svg'
+import LogoDigitalElement from '@/assets/logos/logo-digitalelement-icon.svg'
+import LogoDopple from '@/assets/logos/logo-dopple-icon.svg'
+
+interface WorkItemDate {
+    month: number
+    year: number
+}
+
+interface WorkItem {
+    company: string
+    dateEnd: WorkItemDate | 'present'
+    dateStart: WorkItemDate
+    description: string
+    href: string
+    logo: ImageMetadata
+    role: string
+}
+
+const work: WorkItem[] = [
+    {
+        company: 'Dopple',
+        logo: LogoDopple,
+        href: 'https://www.dopple.io',
+        role: 'Frontend Developer, Experience Designer',
+        dateStart: { month: 4, year: 2021 },
+        dateEnd: 'present',
+        description: 'Serve as lead client-facing engineer; lead design & development (primarily Vue.js) for core features across Dopple’s 3D asset management platform; crafted Dopple’s official design system; wrote, built, & maintain Dopple’s developer documentation site.'
+    },
+    {
+        company: 'Axway',
+        logo: LogoAxway,
+        href: 'https://www.axway.com',
+        role: 'Frontend Developer, Principal Product Mktg. Manager',
+        dateStart: { month: 7, year: 2019 },
+        dateEnd: { month: 3, year: 2021 },
+        description: 'Served as hybrid Developer/Principal Product Marketer leading Axway’s developer strategy; from POC to production, brought new developer-centric features to Axway’s core SaaS/iPaaS product.'
+    },
+    {
+        company: 'Digital Element',
+        logo: LogoDigitalElement,
+        href: 'https://www.digitalelement.com',
+        role: 'Developer, Senior Creative & Digital Marketing',
+        dateStart: { month: 6, year: 2014 },
+        dateEnd: { month: 6, year: 2019 },
+        description: 'Led Digital Element’s digital marketing & web initiatives; led the redesign & relaunch of Digital Element’s website; designed, built, and optimized key landing pages, improving conversion rates upwards of 140%.'
+    },
+]
+
+function formatDate(date: WorkItemDate | 'present') {
+    if (date === 'present') {
+        return 'present'
+    }
+
+    const month = date.month.toString().padStart(2, '0')
+    const year = date.year.toString().padStart(2, '0')
+    return `${month}/${year}`
+}
+---
+
+<section>
+    <SectionHeading heading="Experience" subheading="I’m proud to have worked alongside some seriously incredible teams." id="experience" />
+    <ol class="company-list">
+        {work.map((item) => (
+            <li class="company-item">
+                <div class="company-header">
+                    <a class="company-logo" href={item.href} rel="noopener noreferrer nofollow" target="_blank">
+                        <Image src={item.logo} alt={`${item.company} logo`} role="presentation" />
+                    </a>
+                    <p class="role-title">{item.role}</p>
+                </div>
+                <p class="company-subheader">
+                    <span class="company-name">{item.company}</span> &mdash; {formatDate(item.dateStart)} to {formatDate(item.dateEnd)}
+                </p>
+                <p class="role-description">{item.description}</p>
+            </li>
+        ))}
+    </ol>
+</section>
+
+<style lang="scss">
+@import '@/styles/_Variables.scss';
+
+$logo-icon-size: 4rem;
+$timeline-color: AFB8C6;
+$timeline-margin: 2rem;
+$timeline-width: 0.125rem;
+
+.company-list {
+    list-style-type: none;
+    margin: 0 auto 4rem;
+    max-width: 50rem;
+    padding: 0 0 0 ($logo-icon-size + ($timeline-margin * 2) + $timeline-width);
+}
+
+.company-item {
+    position: relative;
+
+    &:not(:last-child) {
+        padding-bottom: 4rem;
+    }
+
+    &::before {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="2px" height="6px" viewBox="0 0 2 6" stroke-width="2" stroke="%23#{$timeline-color}" fill="none" stroke-linecap="round"><line x1="1" x2="1" y1="1" y2="2" /></svg>');
+        content: '';
+        height: 100%;
+        left: ($timeline-margin * -1);
+        position: absolute;
+        top: 0;
+        width: $timeline-width;
+    }
+
+    &::after {
+        background: #FFF;
+        border-radius: 1rem;
+        border: 1px solid ##{$timeline-color};
+        content: '';
+        height: 1.125rem;
+        left: ($timeline-margin * -1);
+        position: absolute;
+        top: 0.625rem;
+        transform: translateX(calc(-50% + ($timeline-width / 2)));
+        width: 1.125rem;
+    }
+
+    &:first-child::before {
+        height: calc(100% - 1rem);
+        top: 1rem;
+    }
+
+    &:last-child::before {
+        height: 1rem;
+    }
+}
+
+.company-header {
+    position: relative;
+}
+
+.company-logo {
+    background: #FFF;
+    border: 1px solid #DFE3E9;
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 10, 20, 0.08);
+    padding: 1.125rem;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translate(($timeline-margin * -2) + $timeline-width, -50%);
+    user-select: none;
+    width: $logo-icon-size;
+}
+
+.company-subheader {
+    color: $color-text-light;
+    font-size: 1rem;
+    margin: 0 0 0.125rem;
+    text-transform: uppercase;
+}
+
+.company-name {
+    font-weight: bold;
+    opacity: 0.67;
+}
+
+.role-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.role-description {
+    font-size: 1.125rem;
+    margin: 1rem 0 0 0;
+}
+</style>
