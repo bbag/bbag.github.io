@@ -25,6 +25,7 @@ const projectsCollection = defineCollection({
                 'view'
             ]),
         })).optional(),
+        draft: z.boolean().optional(),
     })
 });
 

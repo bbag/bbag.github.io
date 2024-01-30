@@ -8,7 +8,9 @@ import SectionHeading from '@/components/blocks/SectionHeading.astro'
 
 type ProjectType = CollectionEntry<'projects'>
 
-const projects = await getCollection('projects')
+const projects = await getCollection('projects', ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+})
 
 function priorityValue(priority: string) {
     switch (priority) {
@@ -98,7 +100,7 @@ const linkButtons: LinkButton[] = [
                 if (a.data.date < b.data.date) return 1;
                 return 0;
             })
-            .map((item) => (<li class="project">
+            .map((item) => (<li class="project" data-draft={item.data.draft}>
                 <a class="project-link" href={`/projects/${item.slug}`} title={item.data.title}>
                     <div class="project-link__outer">
                         <div class="project-link__inner">
@@ -145,7 +147,7 @@ const linkButtons: LinkButton[] = [
                         <KeyboardButton href={`/projects/${item.slug}`} size="lg" fullWidth={true} title="Project details">
                             Details
                         </KeyboardButton>
-                        {item.data.links?.map((link) => {
+                        {item.data.links?.sort((a, b) => a.label > b.label ? 1 : -1).map((link) => {
                             const button = linkButtons.find((button) => button.label === link.label)
                             return (
                                 <KeyboardButton
@@ -277,6 +279,40 @@ input[name='projects-layout-radios'] {
     display: grid;
     gap: 2rem;
     grid-template-columns: 20rem minmax(0, 1fr);
+
+    &[data-draft] {
+        $offset: 1rem;
+
+        position: relative;
+
+        &::after,
+        &::before {
+            border: 1px solid rgba(85, 69, 0, 0.25);
+            pointer-events: none;
+            position: absolute;
+        }
+
+        &::after {
+            background-color: #FFF;
+            border-radius: 0.5rem;
+            color: rgb(85, 69, 0);
+            content: 'DRAFT';
+            left: $offset * 2;
+            padding: 0.375rem 1rem;
+            top: ($offset * -1) - 1rem;
+        }
+
+        &::before {
+            background-color: rgba(255, 233, 135, 0.15);
+            border-radius: 2rem;
+            content: '';
+            display: block;
+            height: calc(100% + #{$offset * 2});
+            left: $offset * -1;
+            top: $offset * -1;
+            width: calc(100% + #{$offset * 2});
+        }
+    }
 }
 
 .project-buttons {

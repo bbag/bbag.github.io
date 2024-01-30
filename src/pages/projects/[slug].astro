@@ -25,7 +25,9 @@ function formattedDate(date: Date) {
 }
 
 export const getStaticPaths = async () => {
-    const projectItems = await getCollection('projects')
+    const projectItems = await getCollection('projects', ({ data }) => {
+        return import.meta.env.PROD ? data.draft !== true : true;
+    })
     const paths = projectItems.map((item) => {
         return {
             params: {
@@ -55,6 +57,9 @@ const { Content } = await item.render()
                 Home
             </KeyboardButton>
         </div>
+        {item.data.draft && (
+            <span class="draft-notice">Draft</span>
+        )}
         <h1 class="project-title">{ item.data.title }</h1>
         <p class="project-date">
             <svg class="line-icon" width="12" height="12" viewBox="0 0 24 24">
@@ -217,9 +222,12 @@ const { Content } = await item.render()
     }
 }
 
-// .project-date {
-//     color: rgba(11, 14, 19, 0.7);
-//     font-size: 0.875rem;
-//     margin: 0 0 1rem;
-// }
+.draft-notice {
+    background: rgba(255, 233, 135, 0.35);
+    border: 1px solid rgba(85, 69, 0, 0.2);
+    border-radius: 0.5rem;
+    color: rgb(85, 69, 0);
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
 </style>
