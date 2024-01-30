@@ -15,10 +15,44 @@ import DoppleDevToolsVideo from './dopple-dev-tools-sd.mp4'
 
 ## Overview
 
-In 2023, I built the *Dopple Dev Tools* Chrome extension to help the Dopple team quickly debug issues and interate on changes with 3D models.
+In 2023, I built the Dopple Dev Tools Chrome extension to help the Dopple team quickly debug issues and interate on changes with 3D models.
 
-<video width="736" height="414" autoplay muted>
+The idea started off as a personal project built over the course of a few nights to help my own productivity. I’d never built a browser extension before this, but about one week and 800 lines of code later, the idea was alive — and the team loved it!
+
+<video width="736" height="414" autoplay muted loop>
     <source src={DoppleDevToolsVideo} type="video/mp4"></source>
 </video>
 
-More info coming soon...
+## Key features
+
+- Diagnostic data on the 3D product (including load times, product version number, and platform features enabled).
+- Quick links to our most commonly used resources, such as Dopple’s developer docs and API reference.
+- A full breakdown of the 3D product’s current configuration, along with ability to edit values for each.
+  - String values can be manually entered and saved.
+  - Boolean values can be toggled at the click of a button.
+  - RGB values show a color preview swatch which triggers a color picker.
+- A list of hotspots (based on their defined IDs) that are available on the product.
+- Shows the raw JSON output of all Dopple-related data detected on the current page.
+- Collapsible sections for each of the above features, so you can hide the ones you don’t need.
+
+## Uses
+
+The extension is distributed for internal and client use only (so no link to download it on the Chrome store or view the code in GitHub, sorry!), and is designed to be useful for everyone across the team:
+
+- Dopple’s **Sales team** can use it before or during calls with prospective clients to pre-configure a demo product to match that client’s branding, demonstrate how fast the 3D assets load, and show off the entire range of 3D configuration options that can be offered.
+- The **Marketing team** can use it to customize the appearance of demo 3D products and live client 3D products for use in marketing materials and promo images.
+- The **Artists** themselves can use it to quickly preview their configuration combos in a live environment to compare the fidelity against how it looks in their local 3D software.
+- The **Engineering team** (especially myself) can use it to help diagnose issues with live client products, verify calls to Dopple’s API, quickly test extended features like augmented reality + snapshots, and more. 
+- The **Finance** & **HR teams** admittedly didn’t have much of a need for it, but they said it was still pretty fun to play with. 😁
+
+## Other tidbits
+
+The extension injects an immediately-invoked script on the page when the “Scan Now” button is clicked, which grabs and stringifies all the 3D product data on the page (including data contained in the global `window.Dopple` object) so that the extension can then read it directly from the page’s DOM to display in the extension pop-up.
+
+“Why does it not just run its own script and do all its own processing in the pop-up’s context instead,” you ask?
+
+Because extensions have a fun little quirk where the page DOM *they’re* aware of may be slightly different than the page DOM *you’re* seeing — particularly when it comes to custom objects on the global `window` object.
+
+In order to get around this limitation, this script injection approach was the most straightforward option.
+
+All in all, this was a *very* fun little project, a great learning experience on extension capabilities, and an extremely useful tool for the team.
