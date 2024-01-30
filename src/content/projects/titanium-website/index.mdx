@@ -1,0 +1,33 @@
+---
+title: Axway’s Titanium Website
+date: 2021-10-01
+description: A total refresh and rebuild of the Titanium mobile app framework’s website.
+image: { src: './thumbnail-titanium.png', alt: 'APT hero' }
+type: project
+tech: ['HTML', 'CSS', 'JavaScript']
+links: [
+  # { label: 'github', href: 'https://github.com' },
+  { label: 'view', href: 'https://bbag.github.io/titanium-site/' }
+]
+priority: high
+draft: true
+---
+
+import { Image } from 'astro:assets'
+import ImgGrid from '@/components/blocks/ImgGrid.astro'
+import Image1 from './img-titanium-site-1.png'
+import Image2 from './img-titanium-site-2.png'
+import Image3 from './img-titanium-site-3.png'
+import Image4 from './img-titanium-site-4.png'
+
+## Overview
+
+Titanium is a framework for building cross-platform native mobile applications using a single JavaScript codebase.
+
+I worked with the Titanium team at Axway to design the official new &ldquo;microsite&rdquo; for Titanium &mdash; a subdomain of the main Axway website that would serve as the introduction and documentation hub for out Titanium product.
+
+This new design was drafted (<a href='https://bbag.github.io/titanium-site/' target='_blank'>demo here</a>) entirely by me, from pure HTML, CSS, and JS &mdash; no CMS or frameworks used. Components were designed for the final site to be built in VuePress.
+
+<div class="content-breakout">
+  <ImgGrid images={[Image1, Image2, Image3, Image4]} cols="4" />
+</div>

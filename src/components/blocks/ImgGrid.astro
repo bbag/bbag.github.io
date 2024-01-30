@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+    cols?: number;
+    images: ImageMetadata[];
+}
+
+const { cols = 1, images } = Astro.props as Props;
+
+/** Calculates the starting `width` attribute for the images in the grid. */
+function calcImageWidth() {
+    const fullWidth = 1312
+    const gapTotal = 32 * (cols - 1)
+
+    return (fullWidth - gapTotal) / cols
+}
+---
+
+<div class="img-grid" data-cols={cols}>
+    {images.map(img => (
+        <a href={img.src} target="_blank">
+            <Image src={img} alt="" width={calcImageWidth()} />
+        </a>
+    ))}
+</div>
+
+<style lang="scss">
+.img-grid {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem auto;
+
+    & a {
+        aspect-ratio: 2 / 3;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1), 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.06);
+        overflow: hidden;
+    }
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+    }
+}
+
+[data-cols='1'] {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+[data-cols='2'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+[data-cols='3'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+[data-cols='4'] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+</style>
