@@ -7,6 +7,14 @@ body {
     background: #F2F5FB;
 }
 
+h2 {
+    font-size: 1.75rem;
+
+    &:not(:first-child) {
+        margin-top: 2rem;
+    }
+}
+
 .line-icon {
     color: inherit;
     fill: none;
@@ -16,4 +24,23 @@ body {
     stroke-linejoin: round;
     stroke-width: 1.5;
     width: 1.5rem;
+}
+
+
+video {
+    border-radius: 0.5rem;
+
+    &:not(:first-child) {
+        margin-top: 2rem;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+}
+
+pre {
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    padding: 1rem 1.25rem;
 }
