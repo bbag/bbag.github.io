@@ -162,16 +162,24 @@ main {
     & p,
     & ul,
     & ol {
-        font-size: 1.25rem;
+        font-size: 1.125rem;
     }
 
     @media (min-width: $breakpoint-sm) {
-        grid-template-columns:
-        [content-full-start] minmax(($content-padding), 1fr)
-        [content-breakout-start] minmax(0, $content-breakout-size)
-        [content-main-start] min(100% - (($content-padding * 2) + $left-nav-buffer), 46rem) [content-main-end]
-        minmax(0, $content-breakout-size) [content-breakout-end]
-        minmax($content-padding, 1fr) [content-full-end];
+        & {
+            grid-template-columns:
+                [content-full-start] minmax(($content-padding), 1fr)
+                [content-breakout-start] minmax(0, $content-breakout-size)
+                [content-main-start] min(100% - (($content-padding * 2) + $left-nav-buffer), 46rem) [content-main-end]
+                minmax(0, $content-breakout-size) [content-breakout-end]
+                minmax($content-padding, 1fr) [content-full-end];
+        }
+
+        & p,
+        & ul,
+        & ol {
+            font-size: 1.25rem;
+        }
     }
 }
 
