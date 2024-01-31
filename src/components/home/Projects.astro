@@ -269,6 +269,8 @@ input[name='projects-layout-radios'] {
 
 // #projects-layout-list:checked ~ .projects-list {
 .projects-list {
+    display: grid;
+    gap: 2rem;
     list-style-type: none;
     margin: 0 auto 2rem;
     max-width: $breakpoint-md;
@@ -278,7 +280,43 @@ input[name='projects-layout-radios'] {
 .project {
     display: grid;
     gap: 2rem;
-    grid-template-columns: 20rem minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+
+    #projects-layout-list:checked ~ .projects-list & {
+        @media (min-width: $breakpoint-sm) {
+            grid-template-columns: 16rem minmax(0, 1fr);
+        }
+
+        @media (min-width: $breakpoint-md) {
+            grid-template-columns: 20rem minmax(0, 1fr);
+        }
+
+        & .project-link__outer {
+            border: 0.25rem solid #FFF;
+            border-radius: 1rem;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 20, 40, 0.08);
+            overflow: hidden;
+            transition: transform $transition-func;
+        }
+
+        & .project-img {
+            transition: filter $transition-func, transform $transition-func;
+        }
+
+        & .project-link:hover,
+        & .project-link:focus-within {
+            outline: none;
+
+            & .project-link__outer {
+                transform: scale(0.95);
+            }
+
+            & .project-img {
+                filter: blur(0.5rem);
+                transform: scale(1.15);
+            }
+        }
+    }
 
     &[data-draft] {
         $offset: 1rem;
@@ -315,6 +353,14 @@ input[name='projects-layout-radios'] {
     }
 }
 
+.project-link {
+    display: grid;
+
+    & > * {
+        grid-area: 1 / 1;
+    }
+}
+
 .project-buttons {
     display: flex;
     gap: 1rem;
@@ -323,7 +369,7 @@ input[name='projects-layout-radios'] {
 .project-title {
     font-size: 1.625rem;
     line-height: 1.2;
-    margin: 0;
+    margin: 1rem 0 0;
 }
 
 .tech-list {
@@ -343,7 +389,7 @@ input[name='projects-layout-radios'] {
 
 #projects-layout-hexagons:checked ~ .projects-list {
     color: red;
-    display: grid;
+    gap: 0;
     grid-template-columns: repeat(3, 1fr);
     max-width: initial;
     list-style-type: none;
@@ -464,8 +510,6 @@ input[name='projects-layout-radios'] {
 // ---------------------------------------------------------- //
 
 #projects-layout-cards:checked ~ .projects-list {
-    display: grid;
-    gap: 2rem;
     grid-template-columns: minmax(0, 1fr);
     max-width: initial;
 
@@ -488,14 +532,6 @@ input[name='projects-layout-radios'] {
         transition: transform $transition-func;
     }
 
-    & .project-link {
-        display: grid;
-
-        & > * {
-            grid-area: 1 / 1;
-        }
-    }
-
     & .project-img {
         transition: filter $transition-func, transform $transition-func;
     }
@@ -512,6 +548,10 @@ input[name='projects-layout-radios'] {
             filter: blur(0.5rem);
             transform: scale(1.15);
         }
+    }
+
+    & .project-title {
+        margin: 0;
     }
 
     & .project-details {
