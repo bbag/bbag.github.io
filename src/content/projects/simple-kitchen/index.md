@@ -6,8 +6,8 @@ image: { src: './thumbnail-simplekitchen.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS']
 links: [
-  { label: 'github', href: 'https://github.com' },
-  { label: 'view', href: 'https://google.com' }
+  # { label: 'github', href: 'https://github.com' },
+  # { label: 'view', href: 'https://google.com' }
 ]
 priority: medium
 ---

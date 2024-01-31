@@ -6,8 +6,8 @@ image: { src: './thumbnail-officescheduler.png', alt: 'Project 1' }
 type: project
 tech: ['HTML', 'CSS', 'TypeScript', 'Vue']
 links: [
-  { label: 'github', href: 'https://github.com' },
-  { label: 'view', href: 'https://google.com' }
+  # { label: 'github', href: 'https://github.com' },
+  # { label: 'view', href: 'https://google.com' }
 ]
 priority: medium
 ---

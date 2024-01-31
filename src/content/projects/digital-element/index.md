@@ -7,10 +7,12 @@ type: project
 tech: ['HTML', 'CSS', 'TypeScript', 'Vue', 'Astro']
 links: [
   { label: 'github', href: 'https://github.com/bbag/3d-geolocation-globe' },
-  { label: 'view', href: 'https://www.digitalelement.com/geolocation' },
+  { label: 'view', href: 'https://bbag.github.io/3d-geolocation-globe/' },
 ]
 priority: medium
 ---
+
+This is also live on [Digital Element’s website](https://www.digitalelement.com/geolocation).
 
 ## Description coming soon...
 

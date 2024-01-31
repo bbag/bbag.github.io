@@ -6,8 +6,8 @@ image: { src: './thumbnail-titaniumthemepicker.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS', 'JavaScript', 'Vue']
 links: [
-  { label: 'github', href: 'https://github.com' },
-  { label: 'view', href: 'https://google.com' }
+  { label: 'github', href: 'https://github.com/bbag/titanium-theme-creator' },
+  # { label: 'view', href: 'https://google.com' }
 ]
 priority: medium
 ---

@@ -6,8 +6,8 @@ image: { src: './thumbnail-rcv.png', alt: 'APT hero' }
 type: project
 tech: ['HTML', 'CSS', 'JavaScript', 'Vue']
 links: [
-  { label: 'github', href: 'https://github.com' },
-  { label: 'view', href: 'https://google.com' }
+  { label: 'github', href: 'https://github.com/bbag/vue-beatpath-visualization/' },
+  # { label: 'view', href: 'https://google.com' }
 ]
 priority: low
 ---
