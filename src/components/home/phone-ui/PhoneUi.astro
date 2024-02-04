@@ -1,0 +1,80 @@
+---
+import PhoneScreen from "./PhoneScreen.vue"
+---
+
+<div class="phone-wrapper">
+    <svg class="phone-svg" x="0px" y="0px" viewBox="0 0 422 860">
+        <mask id="screen-mask">
+            <path fill="white" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z"/>
+        </mask>
+        <g class="side-buttons">
+        xm <path d="M6,172H4c-2.2,0-4-1.8-4-4v-24c0-2.2,1.8-4,4-4h2V172z"/>
+            <path d="M6,252H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V252z"/>
+            <path d="M6,332H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V332z"/>
+            <path d="M416,215.9h2c2.2,0,4,1.8,4,4v82c0,2.2-1.8,4-4,4h-2V215.9z"/>
+        </g>
+        <path class="frame" d="M358,860H64c-33.1,0-60-26.9-60-60V60C4,26.9,30.9,0,64,0h294c33.1,0,60,26.9,60,60v740C418,833.1,391.1,860,358,860z"/>
+        <path class="screen-glow" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z"/>
+        <foreignObject x="16" y="12" width="390" height="836" mask="url(#screen-mask)">
+            <PhoneScreen client:load />
+        </foreignObject>
+        <path class="island" d="M261,50H161c-7.7,0-14-6.3-14-14v0c0-7.7,6.3-14,14-14h100c7.7,0,14,6.3,14,14v0C275,43.7,268.7,50,261,50z"/>
+    </svg>
+</div>
+
+<style lang="scss">
+@import '@/styles/_Variables.scss';
+
+.phone-wrapper,
+.phone-svg {
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+}
+
+.phone-wrapper {
+    max-width: 14rem;
+
+    &::before {
+        background: rgba(0, 10, 20, 0.5);
+        bottom: 0;
+        content: '';
+        display: block;
+        filter: blur(0.5rem);
+        height: 1rem;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, 40%) scaleX(3.5);
+        width: 25%;
+        z-index: 1;
+    }
+
+    @media (min-width: $breakpoint-sm) {
+        & {
+            max-width: 26.375rem;
+        }
+    }
+}
+
+.phone-svg {
+    display: block;
+    max-width: 26.375rem;
+    position: relative;
+    z-index: 1;
+}
+
+.side-buttons,
+.frame,
+.island {
+    fill: #50606E;
+}
+
+.screen-bg {
+    fill: #FAFAFA;
+}
+
+.screen-glow {
+    filter: drop-shadow(0 0.0625rem 0.125rem rgba(255, 255, 255, 0.5));
+    fill: rgba(255, 255, 255, 0.5);
+}
+</style>
