@@ -31,18 +31,33 @@ function decrementCurrentPatient() {
     currentPatient.value === 0 ? currentPatient.value = patients.length - 1 : currentPatient.value = currentPatient.value - 1
 }
 
+// ---------------------------------------------------------- //
+// Height scale                                               //
+// ---------------------------------------------------------- //
+
 const heightScaleFootSegments = 6
 const heightScaleTotalFeet = 7
 
 function calcHeightScaleY(n: number) {
-    // (n - 1) * 5
-    // return (n / heightScaleTotalFeet) * heightScaleFootSegments
-    return (n - 1) * patients[currentPatient.value].height / heightScaleFootSegments * 0.865
+    let patientHeight = patients[currentPatient.value].stats.find(stat => stat.label === 'Height')?.value as number
+
+    // If no height is found, default to 6 feet (just making TypeScript happy here...)
+    if (!patientHeight) {
+        patientHeight = 6
+    }
+
+    return (n - 1) * patientHeight / heightScaleFootSegments * 0.865
 }
 
 function calcHeightReadout(n: number) {
     return (n - 1) % heightScaleFootSegments === 0 ? `${(n - 1) / heightScaleFootSegments}’` : '&nbsp;'
 }
+
+// ---------------------------------------------------------- //
+// Patient stats                                              //
+// ---------------------------------------------------------- //
+
+const isPatientStatsOpen = ref(false)
 
 </script>
 
@@ -133,6 +148,27 @@ function calcHeightReadout(n: number) {
                     </path>
                 </g>
             </svg>
+            <div
+                class="patient-stats"
+                :data-patient-stats-visible="isPatientStatsOpen"
+            >
+                <button class="patient-stats-close"  @click="isPatientStatsOpen = false">
+                    <svg class="line-icon" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M17 7l-10 10" />
+                        <path d="M7 7l10 10" />
+                    </svg>
+                </button>
+                <h3 class="patient-stats-heading">Patient Stats</h3>
+                <div class="patient-stats-content">
+                    <div
+                        class="patient-stats-item"
+                        v-for="(stat, i) in patients[currentPatient].stats"
+                    >
+                        <h4 class="patient-stats-item-label">{{ stat.label }}</h4>
+                        <p class="patient-stats-item-value">{{ stat.value }}</p>
+                    </div>
+                </div>
+            </div>
             <!-- <ol class="injury-list">
                 <li
                     v-for="(part, i) in injuryNameMap"
@@ -143,7 +179,7 @@ function calcHeightReadout(n: number) {
             </ol> -->
         </div>
         <div class="screen-bottom">
-            <button class="ui-button">View Patient Stats</button>
+            <button class="ui-button" @click="isPatientStatsOpen = true">View Patient Stats</button>
         </div>
     </div>
 </template>
@@ -271,7 +307,7 @@ $heatmap-transition-duration: 500ms;
     left: 2rem;
     position: absolute;
     transition: all $heatmap-transition-duration ease-in-out;
-    width: 100%;
+    width: calc(100% - 7rem);
 
     &::before {
         background: rgba(255, 255, 255, 0.08);
@@ -280,7 +316,7 @@ $heatmap-transition-duration: 500ms;
         left: 1.5rem;
         position: absolute;
         top: 0.625rem;
-        width: calc(100% - 7rem);
+        width: 100%;
     }
 }
 
@@ -403,5 +439,82 @@ $heatmap-transition-duration: 500ms;
         outline: 0.125rem solid #1783FF;
         outline-offset: 0.25rem;
     }
+}
+
+/* ----------------------------------------- */
+/* Screen bottom                             */
+/* ----------------------------------------- */
+
+.patient-stats {
+    background: #FFF;
+    border-radius: 2rem 2rem 0 0;
+    bottom: 0;
+    box-shadow: 0 -0.125rem 1rem rgba(0, 0, 0, 0.25);
+    height: 32rem;
+    padding: 1.75rem;
+    position: absolute;
+    transform: translateY(100%);
+    transition: all 450ms cubic-bezier(0.5, 0, 0.2, 1);
+    width: 100%;
+    z-index: 2;
+
+    &[data-patient-stats-visible="true"] {
+        transform: translateY(0);
+    }
+}
+
+.patient-stats-close {
+    background: rgba(0, 10, 20, 0.1);
+    border: 0;
+    border-radius: 0.75rem;
+    color: #343638;
+    display: flex;
+    padding: 0.5rem;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    transition: all 200ms ease-in-out;
+
+    &:active {
+        transform: scale(0.92);
+        transition: all 16ms ease-in-out;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: 0.125rem solid #1783FF;
+        outline-offset: 0.25rem;
+    }
+}
+
+.patient-stats-heading {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-weight: normal;
+    font-size: 1.375rem;
+    padding: 0.25rem 0.5rem 1.5rem;
+}
+
+.patient-stats-content {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0.5rem;
+    
+    &,
+    & p {
+        line-height: 1.1;
+    }
+}
+
+.patient-stats-item {
+    // margin: 0 0 1.5rem;
+}
+
+.patient-stats-item-label,
+.patient-stats-item-value {
+    margin: 0;
 }
 </style>
