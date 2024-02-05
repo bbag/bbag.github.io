@@ -46,7 +46,8 @@ function calcHeightScaleY(n: number) {
         patientHeight = 6
     }
 
-    return (n - 1) * patientHeight / heightScaleFootSegments * 0.865
+    // return (n - 1) * patientHeight / heightScaleFootSegments * 0.865
+    return (n - 1) * heightScaleFootSegments / patientHeight * 0.865
 }
 
 function calcHeightReadout(n: number) {

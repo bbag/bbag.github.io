@@ -59,7 +59,7 @@ export const patients = [
         stats: [
             { label: 'Date', value: '1/27/2024' },
             { label: 'Age', value: 34 },
-            { label: 'Height', value: 6.5, },
+            { label: 'Height', value: 6.25, },
             { label: 'Weight', value: 228 },
             { label: 'Blood Type', value: 'AB-' }, // O, A, B, AB
             { label: 'Sex', value: 'M' },
