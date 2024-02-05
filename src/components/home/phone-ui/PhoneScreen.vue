@@ -9,200 +9,9 @@ import {
     injurySvgPartPaths
 } from './heatmapPathData'
 
-// type InjuryReport = {
-//     [key in keyof Injuries]: {
-//         count: number;
-//         severityScore: number;
-//     }
-// }
-
-// /** Severity level values (mild, moderate, or severe) for injuries. */
-// const injuryValues: Record<Severity, number> = {
-//     'mild': 1,
-//     'moderate': 3,
-//     'severe': 7,
-// }
-
-// const classes = [
-//     {
-//         id: 1696987715445,
-//         date: [2023, 8, 10],
-//         injuries: {
-//             'elbow-l': 'mild',
-//         },
-//         type: 'gi'
-//     },
-//     {
-//         id: 1696987917686,
-//         date: [2023, 8, 13],
-//         injuries: {
-//             'elbow-l': 'moderate',
-//             'wrist-l': 'mild'
-//         },
-//         type: 'gi'
-//     },
-//     {
-//         id: 1696987918667,
-//         date: [2023, 8, 14],
-//         injuries: {},
-//         type: 'no-gi'
-//     },
-//     {
-//         id: 1696987918468,
-//         date: [2023, 8, 14],
-//         injuries: {},
-//         type: 'no-gi'
-//     },
-//     {
-//         id: 1696988153279,
-//         date: [2023, 8, 19],
-//         injuries: {
-//             'knee-r': 'moderate',
-//             'quad-r': 'mild',
-//             'calf-r': 'mild',
-//             'chest-r': 'mild',
-//             'shoulder-r': 'moderate',
-//             'back-upper': 'mild',
-//             'forearm-r': 'mild',
-//             'hamstring-r': 'mild',
-//             'knee-l': 'mild',
-//             'ankle-l': 'moderate',
-//             'foot-l': 'mild',
-//         },
-//         type: 'gi'
-//     },
-//     {
-//         id: 1696989059520,
-//         date: [2023, 9, 2],
-//         injuries: {
-//             'ribs-l': 'severe'
-//         },
-//         type: 'open-mat'
-//     },
-// ]
-
-// const injuryReport: InjuryReport = classes.reduce((acc: InjuryReport, currentClass) => {
-//     // Get all of the injuries for the current class
-//     const injuries = Object.entries(currentClass.injuries) as [keyof Injuries, Severity][]
-    
-//     injuries.forEach((injury) => {
-//         const [injuryName, injurySeverity] = injury as [keyof Injuries, Severity]
-
-//         if (acc[injuryName]) {
-//             acc[injuryName]!.count++
-//             acc[injuryName]!.severityScore += injuryValues[injurySeverity]
-//         }
-        
-//         else {
-//             acc[injuryName] = {
-//                 count: 1,
-//                 severityScore: injuryValues[injurySeverity]
-//             }
-//         }
-//     })
-    
-//     return acc
-// }, {})
-
-// const maxSeverityScore = Object.values(injuryReport).reduce((acc, injury) => {
-//     return injury.severityScore > acc ? injury.severityScore : acc
-// }, 0)
-
-// function calculateInjuryOpacity(path) {
-//     return injuryReport[path.name] ? Math.max(injuryReport[path.name]!.severityScore / maxSeverityScore, 0.25) : 0
-// }
+import { patients } from './utils/patientData'
 
 const currentPatient = ref(0)
-
-const patients = [
-    {
-        id: 1,
-        injuries: [
-            { part: 'elbow-l', severity: 100 },
-            { part: 'knee-r', severity: 50 },
-            { part: 'wrist-l', severity: 10 },
-        ]
-    },
-    {
-        id: 2,
-        injuries: [
-            { part: 'knee-r', severity: 45 },
-            { part: 'quad-r', severity: 12 },
-            { part: 'calf-r', severity: 8 },
-            { part: 'chest-r', severity: 16 },
-            { part: 'shoulder-r', severity: 58 },
-            { part: 'back-upper', severity: 10 },
-            { part: 'forearm-r', severity: 10 },
-            { part: 'hamstring-r', severity: 10 },
-            { part: 'hip-l', severity: 18 },
-            { part: 'knee-l', severity: 18 },
-            { part: 'ankle-l', severity: 52 },
-            { part: 'foot-l', severity: 14 }
-        ]
-    },
-    {
-        id: 3,
-        injuries: [
-            { part: 'ribs-l', severity: 100 }
-        ]
-    },
-    {
-        id: 4,
-        injuries: [
-            { part: 'elbow-l', severity: 100 },
-            { part: 'knee-r', severity: 50 },
-            { part: 'wrist-l', severity: 10 },
-        ]
-    },
-    {
-        id: 5,
-        injuries: [
-            { part: 'knee-r', severity: 45 },
-            { part: 'quad-r', severity: 12 },
-            { part: 'calf-r', severity: 8 },
-            { part: 'chest-r', severity: 16 },
-            { part: 'shoulder-r', severity: 58 },
-            { part: 'back-upper', severity: 10 },
-            { part: 'forearm-r', severity: 10 },
-            { part: 'hamstring-r', severity: 10 },
-            { part: 'hip-l', severity: 18 },
-            { part: 'knee-l', severity: 18 },
-            { part: 'ankle-l', severity: 52 },
-            { part: 'foot-l', severity: 14 }
-        ]
-    },
-    {
-        id: 6,
-        injuries: [
-            { part: 'ribs-l', severity: 100 }
-        ]
-    },
-    {
-        id: 7,
-        injuries: [
-            { part: 'elbow-l', severity: 100 },
-            { part: 'knee-r', severity: 50 },
-            { part: 'wrist-l', severity: 10 },
-        ]
-    },
-    {
-        id: 8,
-        injuries: [
-            { part: 'knee-r', severity: 45 },
-            { part: 'quad-r', severity: 12 },
-            { part: 'calf-r', severity: 8 },
-            { part: 'chest-r', severity: 16 },
-            { part: 'shoulder-r', severity: 58 },
-            { part: 'back-upper', severity: 10 },
-            { part: 'forearm-r', severity: 10 },
-            { part: 'hamstring-r', severity: 10 },
-            { part: 'hip-l', severity: 18 },
-            { part: 'knee-l', severity: 18 },
-            { part: 'ankle-l', severity: 52 },
-            { part: 'foot-l', severity: 14 }
-        ]
-    }
-]
 
 function calculateInjuryOpacity(pathName: string) {
     const patientInjury = patients[currentPatient.value].injuries.find(injury => injury.part === pathName)
@@ -221,6 +30,20 @@ function incrementCurrentPatient() {
 function decrementCurrentPatient() {
     currentPatient.value === 0 ? currentPatient.value = patients.length - 1 : currentPatient.value = currentPatient.value - 1
 }
+
+const heightScaleFootSegments = 6
+const heightScaleTotalFeet = 7
+
+function calcHeightScaleY(n: number) {
+    // (n - 1) * 5
+    // return (n / heightScaleTotalFeet) * heightScaleFootSegments
+    return (n - 1) * patients[currentPatient.value].height / heightScaleFootSegments * 0.865
+}
+
+function calcHeightReadout(n: number) {
+    return (n - 1) % heightScaleFootSegments === 0 ? `${(n - 1) / heightScaleFootSegments}’` : '&nbsp;'
+}
+
 </script>
 
 <template>
@@ -246,6 +69,15 @@ function decrementCurrentPatient() {
             </div>
         </div>
         <div class="heatmap-container">
+            <ul class="height-scale">
+                <li
+                    v-for="n in (heightScaleFootSegments * heightScaleTotalFeet)"
+                    :key="n"
+                    :class="(n - 1) % heightScaleFootSegments === 0 ? 'height-scale-label' : 'height-scale-segment'"
+                    :style="{ transform: `translateY(-${calcHeightScaleY(n)}rem)` }"
+                    v-html="calcHeightReadout(n)"
+                ></li>
+            </ul>
             <svg class="heatmap-svg" viewBox="34 -238.6 211.9 620.6">
                 <filter id="heatmap-filter" color-interpolation-filters="sRGB">
                     <!-- Crank up the exposure just a tad -->
@@ -334,6 +166,8 @@ $header-bg-top: #f7fafd;
 $body-outline: #90b7d4;
 $body-outline-width: 2;
 
+$heatmap-transition-duration: 500ms;
+
 .screen {
   background: linear-gradient(0deg, $screen-bg-bottom 0%, $screen-bg-top 100%);
   height: 100%;
@@ -413,6 +247,49 @@ $body-outline-width: 2;
 }
 
 /* ----------------------------------------- */
+/* Height scale                              */
+/* ----------------------------------------- */
+
+.height-scale {
+    bottom: 7.875rem;
+    color: #FFF;
+    font-size: 0.875rem;
+    height: 34.5rem;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    // outline: 1px solid red;
+    mask: linear-gradient(0deg, #000 0%, #000 92%, transparent 100%);
+    padding: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.height-scale-label,
+.height-scale-segment {
+    bottom: 0;
+    left: 2rem;
+    position: absolute;
+    transition: all $heatmap-transition-duration ease-in-out;
+    width: 100%;
+
+    &::before {
+        background: rgba(255, 255, 255, 0.08);
+        content: '';
+        height: 1px;
+        left: 1.5rem;
+        position: absolute;
+        top: 0.625rem;
+        width: calc(100% - 7rem);
+    }
+}
+
+.height-scale-label::before {
+    background: rgba(255, 255, 255, 0.2);
+        height: 2px;
+}
+
+/* ----------------------------------------- */
 /* Heatmap SVG                               */
 /* ----------------------------------------- */
 
@@ -428,7 +305,9 @@ $body-outline-width: 2;
 .heatmap-svg {
     height: auto;
     margin: 3rem auto 0;
+    position: relative;
     width: 10.75rem;
+    z-index: 1;
 }
 
 .outline,
@@ -463,7 +342,7 @@ $body-outline-width: 2;
     filter: blur(var(--b, 0));
     opacity: var(--o, 0.7);
     // transition: all 500ms cubic-bezier(0.65, 0, 0.35, 1);
-    transition: all 500ms ease-in-out;
+    transition: all $heatmap-transition-duration ease-in-out;
 }
 
 .part-buttons [data-part] {
