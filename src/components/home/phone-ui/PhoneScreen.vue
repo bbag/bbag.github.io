@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import {
     // type Injuries,
@@ -8,6 +8,8 @@ import {
     injurySvgHeatmapPaths,
     injurySvgPartPaths
 } from './heatmapPathData'
+
+import InjurySeverityDial from './components/InjurySeverityDial.vue'
 
 import { patients } from './utils/patientData'
 
@@ -59,6 +61,40 @@ function calcHeightReadout(n: number) {
 // ---------------------------------------------------------- //
 
 const isPatientStatsOpen = ref(false)
+
+// Format patient height and weight for display, but leave other stats as is
+function outputStatValue(stat: { label: string; value: string | number }) {
+    switch (stat.label) {
+        case 'Height':
+            // Convert decimal feet to feet and inches
+            const feet = Math.floor(stat.value as number)
+            const inches = Math.round((stat.value as number - feet) * 12)
+            return `${feet}’ ${inches}”`
+        case 'Weight':
+            return `${stat.value} lbs.`
+        default:
+            return stat.value
+    }
+}
+
+// ---------------------------------------------------------- //
+// Injury modal                                               //
+// ---------------------------------------------------------- //
+
+const isInjuryModalOpen = ref(false)
+// const currentInjury = ref(null)
+const selectedInjury = ref({ part: 'head', severity: 20 })
+
+function handlePartClick(part: string) {
+    const severity = patients[currentPatient.value].injuries.find(injury => injury.part === part)?.severity || 0
+    isInjuryModalOpen.value = !isInjuryModalOpen.value
+    selectedInjury.value = { part, severity }
+}
+
+const selectedInjuryTitle = computed(() => {
+    //@ts-ignore
+    return injuryNameMap[selectedInjury.value.part]
+})
 
 </script>
 
@@ -144,6 +180,7 @@ const isPatientStatsOpen = ref(false)
                         :key="i"
                         :data-part="path.name"
                         :d="path.d"
+                        @click="handlePartClick(path.name)"
                     >
                         <!-- <title>{{ injuryNameMap[path.name] }}</title> -->
                     </path>
@@ -153,7 +190,7 @@ const isPatientStatsOpen = ref(false)
                 class="patient-stats"
                 :data-patient-stats-visible="isPatientStatsOpen"
             >
-                <button class="patient-stats-close"  @click="isPatientStatsOpen = false">
+                <button class="close-button"  @click="isPatientStatsOpen = false">
                     <svg class="line-icon" width="24" height="24" viewBox="0 0 24 24">
                         <path d="M17 7l-10 10" />
                         <path d="M7 7l10 10" />
@@ -166,21 +203,41 @@ const isPatientStatsOpen = ref(false)
                         v-for="(stat, i) in patients[currentPatient].stats"
                     >
                         <h4 class="patient-stats-item-label">{{ stat.label }}</h4>
-                        <p class="patient-stats-item-value">{{ stat.value }}</p>
+                        <p class="patient-stats-item-value">{{ outputStatValue(stat) }}</p>
                     </div>
                 </div>
+                <div class="patient-stats-description">
+                    <h4 class="patient-stats-item-label">Description</h4>
+                    <p
+                        class="patient-stats-item-value"
+                        v-for="(paragraph, i) in patients[currentPatient].description"
+                        :key="i"
+                    >
+                        {{ paragraph }}
+                    </p>
+                </div>
             </div>
-            <!-- <ol class="injury-list">
-                <li
-                    v-for="(part, i) in injuryNameMap"
-                    :key="i"
-                >
-                    {{ part }}
-                </li>
-            </ol> -->
         </div>
         <div class="screen-bottom">
             <button class="ui-button" @click="isPatientStatsOpen = true">View Patient Stats</button>
+        </div>
+        <div
+            class="injury-modal"
+            :data-injury-modal-open="isInjuryModalOpen"
+        >
+            <div class="injury-modal-content">
+                <button class="close-button"  @click="isInjuryModalOpen = false">
+                    <svg class="line-icon" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M17 7l-10 10" />
+                        <path d="M7 7l10 10" />
+                    </svg>
+                </button>
+                <h3 class="injury-modal-heading">{{ selectedInjuryTitle || 'Injury' }}</h3>
+                <InjurySeverityDial :percent="selectedInjury.severity" />
+                <div>
+                    <p><strong>Severity score: </strong> {{ selectedInjury.severity }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -269,18 +326,48 @@ $heatmap-transition-duration: 500ms;
 }
 
 /* ----------------------------------------- */
-/* Injury list                               */
+/* Injury modal                              */
 /* ----------------------------------------- */
 
-.injury-list {
-    color: #FFF;
-    font-size: 0.75rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 36rem;
-    overflow-x: hidden;
-    overflow-y: auto;
+.injury-modal {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.33);
+    backdrop-filter: blur(0.5rem);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    transition: all 350ms cubic-bezier(0.25, 1, 0.5, 1);
+    visibility: hidden;
+    width: 100%;
+    z-index: 2;
+
+    &[data-injury-modal-open="true"] {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.injury-modal-content {
+    background: #FFF;
+    border-radius: 1rem;
+    box-shadow: 0 0.125rem 0.0625rem rgba(0, 0, 0, 0.15),
+        0 0.375rem 0.75rem rgba(0, 0, 0, 0.15);
+    color: #000;
+    // height: 20rem;
+    padding: 2rem;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 350ms cubic-bezier(0.25, 1, 0.5, 1);
+    width: 20rem;
+    z-index: 3;
+
+    [data-injury-modal-open="true"] & {
+        transform: scale(1);
+    }
 }
 
 /* ----------------------------------------- */
@@ -464,8 +551,8 @@ $heatmap-transition-duration: 500ms;
     }
 }
 
-.patient-stats-close {
-    background: rgba(0, 10, 20, 0.1);
+.close-button {
+    background: rgba(0, 10, 20, 0.08);
     border: 0;
     border-radius: 0.75rem;
     color: #343638;
@@ -492,21 +579,35 @@ $heatmap-transition-duration: 500ms;
 }
 
 .patient-stats-heading {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     font-weight: normal;
     font-size: 1.375rem;
     padding: 0.25rem 0.5rem 1.5rem;
+}
+
+.patient-stats-description,
+.patient-stats-content {
+    padding: 0.5rem;
+}
+
+.patient-stats-description {
+    margin-top: 1.5rem;
+
+    & p {
+        line-height: 1.5;
+        margin: 0.5rem 0 0;
+    }
 }
 
 .patient-stats-content {
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding: 0.5rem;
     
     &,
     & p {
         line-height: 1.1;
+        margin: 0.25rem 0 0;
     }
 }
 
