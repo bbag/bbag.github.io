@@ -86,6 +86,9 @@ const isInjuryModalOpen = ref(false)
 const selectedInjury = ref({ part: 'head', severity: 20 })
 
 function handlePartClick(part: string) {
+    if (isPatientStatsOpen.value) {
+        isPatientStatsOpen.value = false
+    }
     const severity = patients[currentPatient.value].injuries.find(injury => injury.part === part)?.severity || 0
     isInjuryModalOpen.value = !isInjuryModalOpen.value
     selectedInjury.value = { part, severity }
@@ -357,7 +360,6 @@ $heatmap-transition-duration: 500ms;
     box-shadow: 0 0.125rem 0.0625rem rgba(0, 0, 0, 0.15),
         0 0.375rem 0.75rem rgba(0, 0, 0, 0.15);
     color: #000;
-    // height: 20rem;
     padding: 2rem;
     position: relative;
     transform: scale(0.9);
