@@ -3,22 +3,43 @@ import PhoneScreen from "./PhoneScreen.vue"
 ---
 
 <div class="phone-wrapper">
-    <svg class="phone-svg" x="0px" y="0px" viewBox="0 0 422 860">
+    <svg class="phone-svg" x="0" y="0" viewBox="0 0 422 860">
         <mask id="screen-mask">
             <path fill="white" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z"/>
         </mask>
-        <g class="side-buttons">
-        xm <path d="M6,172H4c-2.2,0-4-1.8-4-4v-24c0-2.2,1.8-4,4-4h2V172z"/>
-            <path d="M6,252H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V252z"/>
-            <path d="M6,332H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V332z"/>
-            <path d="M416,215.9h2c2.2,0,4,1.8,4,4v82c0,2.2-1.8,4-4,4h-2V215.9z"/>
+        <g id="phone-production">
+            <g class="side-buttons">
+                <path d="M6,172H4c-2.2,0-4-1.8-4-4v-24c0-2.2,1.8-4,4-4h2V172z"/>
+                <path d="M6,252H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V252z"/>
+                <path d="M6,332H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V332z"/>
+                <path d="M416,215.9h2c2.2,0,4,1.8,4,4v82c0,2.2-1.8,4-4,4h-2V215.9z"/>
+            </g>
+            <path class="frame" d="M358,860H64c-33.1,0-60-26.9-60-60V60C4,26.9,30.9,0,64,0h294c33.1,0,60,26.9,60,60v740C418,833.1,391.1,860,358,860z"/>
+            <path class="screen-glow" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z"/>
+            <foreignObject x="16" y="12" width="390" height="836" mask="url(#screen-mask)">
+                <PhoneScreen client:load />
+            </foreignObject>
+            <path class="island" d="M261,50H161c-7.7,0-14-6.3-14-14v0c0-7.7,6.3-14,14-14h100c7.7,0,14,6.3,14,14v0C275,43.7,268.7,50,261,50z"/>
         </g>
-        <path class="frame" d="M358,860H64c-33.1,0-60-26.9-60-60V60C4,26.9,30.9,0,64,0h294c33.1,0,60,26.9,60,60v740C418,833.1,391.1,860,358,860z"/>
-        <path class="screen-glow" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z"/>
-        <foreignObject x="16" y="12" width="390" height="836" mask="url(#screen-mask)">
-            <PhoneScreen client:load />
-        </foreignObject>
-        <path class="island" d="M261,50H161c-7.7,0-14-6.3-14-14v0c0-7.7,6.3-14,14-14h100c7.7,0,14,6.3,14,14v0C275,43.7,268.7,50,261,50z"/>
+        <g id="phone-wireframe" style="display: none;">
+            <rect x="6" y="2" width="410" height="856" rx="56" />
+            <rect x="18" y="14" width="386" height="832" rx="46" />
+            <g class="side-buttons">
+                <path d="M6,172H4c-2.2,0-4-1.8-4-4v-24c0-2.2,1.8-4,4-4h2V172z"/>
+                <path d="M6,252H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V252z"/>
+                <path d="M6,332H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V332z"/>
+                <path d="M416,215.9h2c2.2,0,4,1.8,4,4v82c0,2.2-1.8,4-4,4h-2V215.9z"/>
+            </g>
+            <!-- Island -->
+            <rect x="149" y="24" width="124" height="24" rx="12" />
+            <!-- Top section -->
+            <rect x="56" y="112" width="48" height="48" rx="8" />
+            <rect x="318" y="112" width="48" height="48" rx="8" />
+            <!-- Heatmap container -->
+            <rect x="56" y="184" width="310" height="530" rx="8" />
+            <!-- Bottom button -->
+            <rect x="101" y="764" width="220" height="48" rx="8" />
+        </g>
     </svg>
 </div>
 
@@ -63,18 +84,33 @@ import PhoneScreen from "./PhoneScreen.vue"
     z-index: 1;
 }
 
-.side-buttons,
-.frame,
-.island {
-    fill: #50606E;
+#phone-production {
+    & .side-buttons,
+    & .frame,
+    & .island {
+        fill: #50606E;
+    }
+
+    & .screen-glow {
+        filter: drop-shadow(0 0.0625rem 0.125rem rgba(255, 255, 255, 0.5));
+        fill: rgba(255, 255, 255, 0.5);
+    }
 }
 
-.screen-bg {
-    fill: #FAFAFA;
-}
 
-.screen-glow {
-    filter: drop-shadow(0 0.0625rem 0.125rem rgba(255, 255, 255, 0.5));
-    fill: rgba(255, 255, 255, 0.5);
+#phone-wireframe {
+    $wireframe-color: #9BC3FF;
+    $wireframe-fill: #F0F6FF;
+
+    & rect,
+    & .island {
+        fill: $wireframe-fill;
+        stroke: $wireframe-color;
+        stroke-width: 4;
+    }
+
+    & .side-buttons {
+        fill: $wireframe-color;
+    }
 }
 </style>
