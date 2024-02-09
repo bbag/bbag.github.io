@@ -3,7 +3,7 @@ import PhoneScreen from "./PhoneScreen.vue"
 ---
 
 <div class="phone-wrapper">
-    <svg class="phone-svg" x="0" y="0" viewBox="0 0 422 860" data-active-view="wireframe">
+    <svg class="phone-svg" x="0" y="0" viewBox="0 0 422 860" data-active-view="production">
         <mask id="screen-mask">
             <path fill="white" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z" />
         </mask>
@@ -34,7 +34,7 @@ import PhoneScreen from "./PhoneScreen.vue"
                 <path d="M416,215.9h2c2.2,0,4,1.8,4,4v82c0,2.2-1.8,4-4,4h-2V215.9z"/>
             </g>
             <!-- Island -->
-            <rect x="149" y="24" width="124" height="24" rx="12" />
+            <!-- <rect x="149" y="24" width="124" height="24" rx="12" /> -->
             <!-- Top section -->
             <!-- <rect x="56" y="118" width="42" height="42" rx="10" />
             <rect x="324" y="118" width="42" height="42" rx="10" /> -->
@@ -96,7 +96,6 @@ $wireframe-fill: #ECF2FC;
 
 .phone-wrapper,
 .phone-svg {
-    color: #ecf2fc;
     margin: 0 auto;
     position: relative;
     width: 100%;
