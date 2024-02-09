@@ -3,23 +3,26 @@ import PhoneScreen from "./PhoneScreen.vue"
 ---
 
 <div class="phone-wrapper">
-    <svg class="phone-svg" x="0" y="0" viewBox="0 0 422 860" data-active-view="production">
+    <svg class="phone-svg" x="0" y="0" viewBox="0 0 422 860" data-active-view="wireframe">
         <mask id="screen-mask">
             <path fill="white" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z" />
         </mask>
-        <g id="phone-production">
+        <g id="phone-sketch">
+            <rect x="6" y="2" width="410" height="856" rx="56" />
+            <rect x="18" y="14" width="386" height="832" rx="46" />
             <g class="side-buttons">
                 <path d="M6,172H4c-2.2,0-4-1.8-4-4v-24c0-2.2,1.8-4,4-4h2V172z"/>
                 <path d="M6,252H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V252z"/>
                 <path d="M6,332H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V332z"/>
                 <path d="M416,215.9h2c2.2,0,4,1.8,4,4v82c0,2.2-1.8,4-4,4h-2V215.9z"/>
             </g>
-            <path class="frame" d="M358,860H64c-33.1,0-60-26.9-60-60V60C4,26.9,30.9,0,64,0h294c33.1,0,60,26.9,60,60v740C418,833.1,391.1,860,358,860z" />
-            <path class="screen-glow" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z" />
-            <foreignObject x="16" y="12" width="390" height="836" mask="url(#screen-mask)">
-                <PhoneScreen client:load />
-            </foreignObject>
-            <path class="island" d="M261,50H161c-7.7,0-14-6.3-14-14v0c0-7.7,6.3-14,14-14h100c7.7,0,14,6.3,14,14v0C275,43.7,268.7,50,261,50z" />
+            <!-- Island -->
+            <rect x="149" y="24" width="124" height="24" rx="12" />
+            <!-- Top section -->
+            <!-- <rect x="56" y="112" width="48" height="48" rx="8" />
+            <rect x="318" y="112" width="48" height="48" rx="8" /> -->
+
+            <text x="211" y="440" class="sketch-text">(Sketch coming soon... 😁)</text>
         </g>
         <g id="phone-wireframe">
             <rect x="6" y="2" width="410" height="856" rx="56" />
@@ -33,10 +36,14 @@ import PhoneScreen from "./PhoneScreen.vue"
             <!-- Island -->
             <rect x="149" y="24" width="124" height="24" rx="12" />
             <!-- Top section -->
-            <rect x="56" y="112" width="48" height="48" rx="8" />
-            <rect x="318" y="112" width="48" height="48" rx="8" />
+            <!-- <rect x="56" y="118" width="42" height="42" rx="10" />
+            <rect x="324" y="118" width="42" height="42" rx="10" /> -->
+            <rect x="86" y="118" width="42" height="42" rx="10" />
+            <rect x="294" y="118" width="42" height="42" rx="10" />
+            <text x="211" y="96" class="wireframe-text--lg">Medical Monitor</text>
+            <text x="211" y="144" class="wireframe-text">– Patient ID –</text>
             <!-- Heatmap container -->
-            <rect x="56" y="184" width="310" height="556" rx="8" />
+            <rect x="56" y="184" width="310" height="556" rx="10" />
             {
                 [...Array(9)].map((_, i) => {
                     const gap = 56
@@ -61,22 +68,22 @@ import PhoneScreen from "./PhoneScreen.vue"
                 <path d="m111 66.3 23.2 9.7c3.7 1.6 7.9 1.6 11.6 0l23.2-9.7" />
             </g>
             <!-- Bottom button -->
-            <rect x="101" y="764" width="220" height="48" rx="8" />
+            <rect x="101" y="766" width="220" height="48" rx="10" />
+            <text x="211" y="795" class="wireframe-text">View Patient Stats</text>
         </g>
-        <g id="phone-sketch">
-            <rect x="6" y="2" width="410" height="856" rx="56" />
-            <rect x="18" y="14" width="386" height="832" rx="46" />
+        <g id="phone-production">
             <g class="side-buttons">
                 <path d="M6,172H4c-2.2,0-4-1.8-4-4v-24c0-2.2,1.8-4,4-4h2V172z"/>
                 <path d="M6,252H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V252z"/>
                 <path d="M6,332H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V332z"/>
                 <path d="M416,215.9h2c2.2,0,4,1.8,4,4v82c0,2.2-1.8,4-4,4h-2V215.9z"/>
             </g>
-            <!-- Island -->
-            <rect x="149" y="24" width="124" height="24" rx="12" />
-            <!-- Top section -->
-            <!-- <rect x="56" y="112" width="48" height="48" rx="8" />
-            <rect x="318" y="112" width="48" height="48" rx="8" /> -->
+            <path class="frame" d="M358,860H64c-33.1,0-60-26.9-60-60V60C4,26.9,30.9,0,64,0h294c33.1,0,60,26.9,60,60v740C418,833.1,391.1,860,358,860z" />
+            <path class="screen-glow" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z" />
+            <foreignObject x="16" y="12" width="390" height="836" mask="url(#screen-mask)">
+                <PhoneScreen client:load />
+            </foreignObject>
+            <path class="island" d="M261,50H161c-7.7,0-14-6.3-14-14v0c0-7.7,6.3-14,14-14h100c7.7,0,14,6.3,14,14v0C275,43.7,268.7,50,261,50z" />
         </g>
     </svg>
 </div>
@@ -84,8 +91,12 @@ import PhoneScreen from "./PhoneScreen.vue"
 <style lang="scss">
 @import '@/styles/_Variables.scss';
 
+$wireframe-color: #6D9DE6;
+$wireframe-fill: #ECF2FC;
+
 .phone-wrapper,
 .phone-svg {
+    color: #ecf2fc;
     margin: 0 auto;
     position: relative;
     width: 100%;
@@ -137,10 +148,7 @@ import PhoneScreen from "./PhoneScreen.vue"
 
 
 #phone-wireframe {
-    $wireframe-color: #9BC3FF;
-    $wireframe-fill: #F0F6FF;
-
-    pointer-events: none;
+    // pointer-events: none;
 
     & rect,
     & .island {
@@ -166,6 +174,19 @@ import PhoneScreen from "./PhoneScreen.vue"
         stroke-width: 4;
         transform: translate(97px, 408px) scale(0.81);
     }
+}
+
+.wireframe-text,
+.wireframe-text--lg {
+    fill: $wireframe-color;
+    font-size: 0.875rem;
+    letter-spacing: 0.0625em;
+    text-anchor: middle;
+    text-transform: uppercase;
+}
+
+.wireframe-text--lg {
+    font-size: 1.25rem;
 }
 
 #phone-sketch {
@@ -200,8 +221,11 @@ import PhoneScreen from "./PhoneScreen.vue"
     }
 }
 
-// Phone transitions
+.sketch-text {
+    text-anchor: middle;
+}
 
+// Phone transitions
 #phone-sketch,
 #phone-wireframe,
 #phone-production {
@@ -232,61 +256,4 @@ import PhoneScreen from "./PhoneScreen.vue"
         clip-path: inset(0 100% 0 0);
     }
 }
-
-// [data-active-view='production'] {
-//     & #phone-wireframe {
-//         clip-path: inset(0 100% 0 0);
-//     }
-// }
-
-
-
-
-
-
-// #phone-wireframe,
-// #phone-production {
-//     opacity: 0;
-//     transition: opacity 400ms ease-in-out;
-// }
-
-// [data-active-view='sketch'] #phone-sketch,
-// [data-active-view='wireframe'] #phone-wireframe,
-// [data-active-view='production'] #phone-production {
-//     opacity: 1;
-// }
-
-
-
-// Mask transitions
-
-// #sketch-mask rect,
-// #wireframe-mask rect,
-// #production-mask rect {
-//     transition: transform 400ms ease-out;
-// }
-
-// [data-active-view='sketch'] {
-//     & #wireframe-mask rect,
-//     & #production-mask rect {
-//         transform: translateX(100%);
-//     }
-// }
-
-// [data-active-view='wireframe'] {
-//     & #sketch-mask rect {
-//         transform: translateX(-100%);
-//     }
-
-//     & #production-mask rect {
-//         transform: translateX(100%);
-//     }
-// }
-
-// [data-active-view='production'] {
-//     & #sketch-mask rect,
-//     & #wireframe-mask rect {
-//         transform: translateX(-100%);
-//     }
-// }
 </style>
