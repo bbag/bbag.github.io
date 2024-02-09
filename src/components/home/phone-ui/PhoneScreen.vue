@@ -72,7 +72,7 @@ const selectedInjuryTitle = computed(() => {
 <template>
     <div class="screen">
         <div class="screen-header">
-            <h2 class="screen-title">Health Tracker</h2>
+            <h2 class="screen-title">Medical Monitor</h2>
             <div class="screen-nav">
                 <button class="screen-nav-button" @click="decrementCurrentPatient">
                     <svg class="line-icon" width="24" height="24" viewBox="0 0 24 24">
