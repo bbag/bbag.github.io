@@ -13,7 +13,7 @@ import DotsBackground from '@/assets/img/dots-background.svg'
                 <h1>Hey, I'm Billy!</h1>
                 <h2>Frontend developer, UX/UI + Product Designer</h2>
             </div>
-            <p>From <KeyboardButton size="sm">sketch</KeyboardButton> to <KeyboardButton size="sm">wireframe</KeyboardButton> to <KeyboardButton size="sm">production</KeyboardButton>, I bring web apps, products, and sites to life with code.</p>
+            <p>From <KeyboardButton size="sm" data-phone-button="sketch">sketch</KeyboardButton> to <KeyboardButton size="sm" data-phone-button="wireframe">wireframe</KeyboardButton> to <KeyboardButton size="sm" data-phone-button="production">production</KeyboardButton>, I bring web apps, products, and sites to life with code.</p>
             <Terminal />
         </div>
         <div class="col-right">
@@ -22,6 +22,17 @@ import DotsBackground from '@/assets/img/dots-background.svg'
         </div>
     </div>
 </section>
+
+<script>
+    const phoneSvg = document.querySelector('.phone-svg') as SVGElement
+    const phoneButtons = document.querySelectorAll('[data-phone-button]') as NodeListOf<HTMLButtonElement>
+
+    phoneButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            phoneSvg.dataset.activeView = button.dataset.phoneButton
+        })
+    })
+</script>
 
 <style lang="scss" define:vars={{ bg: `url(${DotsBackground.src})` }}>
 @import '@/styles/_Variables.scss';
