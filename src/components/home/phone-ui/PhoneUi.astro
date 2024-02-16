@@ -1,5 +1,13 @@
 ---
 import PhoneScreen from './PhoneScreen.vue'
+
+const phoneIdeaText = [
+    { type: 'h1', text: 'Patient Monitor App' },
+    { type: 'h2', text: 'Features:' },
+    { type: 'p', text: 'List patients' },
+    { type: 'p', text: 'Heatmap of injuries for each patient' },
+    { type: 'p', text: 'Button to view patient stats' },
+]
 ---
 
 <div class="phone-wrapper">
@@ -7,9 +15,9 @@ import PhoneScreen from './PhoneScreen.vue'
         <mask id="screen-mask">
             <path fill="white" d="M358,848H64c-26.5,0-48-21.5-48-48V60c0-26.5,21.5-48,48-48h294c26.5,0,48,21.5,48,48v740C406,826.5,384.5,848,358,848z" />
         </mask>
-        <g id="phone-sketch">
+        <g id="phone-idea">
             <rect x="6" y="2" width="410" height="856" rx="56" />
-            <rect x="18" y="14" width="386" height="832" rx="46" />
+            <rect x="18" y="14" width="386" height="832" rx="46" class="phone-idea--bg" />
             <g class="side-buttons">
                 <path d="M6,172H4c-2.2,0-4-1.8-4-4v-24c0-2.2,1.8-4,4-4h2V172z"/>
                 <path d="M6,252H4c-2.2,0-4-1.8-4-4v-56c0-2.2,1.8-4,4-4h2V252z"/>
@@ -22,7 +30,19 @@ import PhoneScreen from './PhoneScreen.vue'
             <!-- <rect x="56" y="112" width="48" height="48" rx="8" />
             <rect x="318" y="112" width="48" height="48" rx="8" /> -->
 
-            <text x="211" y="440" class="sketch-text">(Sketch coming soon... 😁)</text>
+            <foreignObject x="16" y="12" width="390" height="836" mask="url(#screen-mask)">
+                <div class="phone-idea-body">
+                    <h2 class="phone-idea--heading">Patient Monitor App</h2>
+                    <h3 class="phone-idea--subheading">Features:</h3>
+                    <ul class="phone-idea--list">
+                        <li>List patients</li>
+                        <li>Heatmap of patient injuries</li>
+                        <li>Button to view patient stats</li>
+                        <li>Button to add new patient</li>
+                        <li>More coming soon... 😁</li>
+                    </ul>
+                </div>
+            </foreignObject>
         </g>
         <g id="phone-wireframe">
             <rect x="6" y="2" width="410" height="856" rx="56" />
@@ -188,51 +208,96 @@ $wireframe-fill: #ECF2FC;
     font-size: 1.25rem;
 }
 
-#phone-sketch {
-    $sketch-color: #5A5C64;
-    $sketch-fill: #D0D5E0;
+#phone-idea {
+    $idea-color: #5A5C64;
+    $idea-fill: #D0D5E0;
 
     pointer-events: none;
 
     & rect,
     & .island {
-        fill: $sketch-fill;
+        fill: $idea-fill;
     }
 
     & line,
     & rect,
     & .island {
-        stroke: $sketch-color;
+        stroke: $idea-color;
         stroke-linecap: round;
         stroke-width: 4;
     }
 
     & .side-buttons {
-        fill: $sketch-color;
+        fill: $idea-color;
     }
 
     & .outline {
         fill: none;
-        stroke: $sketch-color;
+        stroke: $idea-color;
         stroke-linecap: round;
         stroke-width: 5;
         transform: translate(97px, 408px) scale(0.81);
     }
+
+    & text {
+        fill: $idea-color;
+    }
+
+    & .phone-idea--bg {
+        fill: rgba(255, 255, 255, 0.5);
+    }
 }
 
-.sketch-text {
-    text-anchor: middle;
+
+
+.phone-idea-body {
+    padding: 6rem 2.5rem 2.5rem;
+}
+
+.phone-idea--heading {
+    font-size: 1.375rem;
+    font-weight: bold;
+}
+
+.phone-idea--subheading {
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
+.phone-idea--list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 1.75rem;
+
+    & > li {
+        margin-top: 0.375rem;
+        position: relative;
+
+        &::before {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" stroke-width="2" stroke="%23686C74" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M9 12l2 2l4 -4" /></svg>');
+            background-position: 50%;
+            background-repeat: no-repeat;
+            content: "";
+            display: block;
+            height: 2.25rem;
+            left: -2.25rem;
+            pointer-events: none;
+            position: absolute;
+            top: -0.375rem;
+            width: 2.25rem;
+        }
+    }
 }
 
 // Phone transitions
-#phone-sketch,
+#phone-idea,
 #phone-wireframe,
 #phone-production {
     clip-path: inset(0 0 0 0);
     transition: clip-path 450ms cubic-bezier(0.75, 0, 0.25, 1);
 }
 
-[data-active-view='sketch'] {
+[data-active-view='idea'] {
     & #phone-wireframe,
     & #phone-production {
         clip-path: inset(0 0 0 100%);
@@ -240,7 +305,7 @@ $wireframe-fill: #ECF2FC;
 }
 
 [data-active-view='wireframe'] {
-    & #phone-sketch {
+    & #phone-idea {
         clip-path: inset(0 100% 0 0)
     }
 
@@ -250,7 +315,7 @@ $wireframe-fill: #ECF2FC;
 }
 
 [data-active-view='production'] {
-    & #phone-sketch,
+    & #phone-idea,
     & #phone-wireframe {
         clip-path: inset(0 100% 0 0);
     }
