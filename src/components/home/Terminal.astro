@@ -6,12 +6,6 @@ const terminal = [
             'Atlanta GA'
         ]
     },
-    // {
-    //     name: 'role',
-    //     values: [
-    //         'Frontend Developer + UX/UI Designer'
-    //     ]
-    // },
     {
         name: 'design-skills',
         values: [
@@ -48,14 +42,20 @@ const terminal = [
     }
 ]
 ---
-<pre class="terminal"><span class="terminal--selector">#BillyBaggerman</span> &#123;
+<div class="terminal-wrapper" style="--d: 550ms">
+    <pre class="terminal"><span class="terminal--selector">#BillyBaggerman</span> &#123;
 {terminal.map(item => <div class="terminal--line"><span class="terminal--property">{item.name}</span>: <span class="terminal--value">{item.values.join(', ')}</span>;</div>)}&#125;</pre>
+</div>
 
 <style lang="scss">
 @import '@/styles/_Variables.scss';
 
+.terminal-wrapper {
+    overflow: hidden;
+}
+
 .terminal {
-    animation-delay: 225ms;
+    animation: slide 0.75s var(--d, 0ms) cubic-bezier(0, 0.5, 0, 1) both; // Slide keyframes are defined in HomeHero.astro
     background: #282C34;
     border-radius: 0.75rem;
     color: #ABB2BF;
