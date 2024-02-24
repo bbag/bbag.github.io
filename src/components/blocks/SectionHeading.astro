@@ -11,7 +11,7 @@ const { heading, id, subheading } = Astro.props
 <div>
     <h2 class="section-heading" id={id}>{ heading }</h2>
     {subheading && (
-        <p class="section-subheading">{ subheading }</p>
+        <p class="section-subheading" set:html={subheading}></p>
     )}
     <hr class="section-hr" />
 </div>

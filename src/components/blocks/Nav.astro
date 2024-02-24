@@ -55,7 +55,7 @@ const links = [
             <!-- <div /> -->
             {links.map(link => (
                 <KeyboardButton href={link.href || "#"} size="sm" textAlign="left">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="link-icon" width="24" height="24" viewBox="0 0 24 24">
+                    <svg class="link-icon" width="24" height="24" viewBox="0 0 24 24">
                         <Fragment set:html={link.paths} />
                     </svg>
                     <span class="link-text">{link.title}</span>

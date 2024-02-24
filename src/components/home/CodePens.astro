@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+
+import KeyboardButton from '@/components/base/KeyboardButton.astro'
+import SectionHeading from '@/components/blocks/SectionHeading.astro'
+
+type ExperimentType = CollectionEntry<'experiments'>
+
+const experiments = await getCollection('experiments')
+
+const linkButtons = [
+    {
+        title: 'Info',
+        paths: '<path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 9h.01" /><path d="M11 12h1v4h1" />'
+    },
+    {
+        title: 'View',
+        paths: '<path d="M3 15l9 6l9 -6l-9 -6l-9 6" /><path d="M3 9l9 6l9 -6l-9 -6l-9 6" /><path d="M3 9l0 6" /><path d="M21 9l0 6" /><path d="M12 3l0 6" /><path d="M12 15l0 6" />'
+    }
+]
+---
+
+<section>
+    <SectionHeading heading="CodePens" subheading="A fun playground of one-off experiments and random code ideas." id="codepens" />
+    <ol class="experiments-list">
+        {experiments
+            // Sort projects by priority first, then date
+            .sort((a, b) => {
+                if (a.data.date > b.data.date) return -1;
+                if (a.data.date < b.data.date) return 1;
+                return 0;
+            })
+            .map((item) => (
+                <li class="experiment">
+                    <h3>
+                        {item.data.title}
+                    </h3>
+                    <a href={`/experiments/${item.slug}`}>
+                        <Image
+                            class="experiment-img"
+                            src={item.data.image.src}
+                            alt={item.data.image.alt}
+                            width="625"
+                            height="575"
+                            format="webp"
+                        />
+                    </a>
+                    <div class="experiment-buttons">
+                        {
+                            linkButtons.map((button) => (
+                                <KeyboardButton
+                                    href={button.title === 'View' ? item.data.link : `/experiments/${item.slug}`}
+                                    target={button.title === 'View' ? '_blank' : undefined}
+                                >
+                                    <svg class="line-icon" width="24" height="24" viewBox="0 0 24 24">
+                                        <Fragment set:html={button.paths} />
+                                    </svg>
+                                    {button.title}
+                                </KeyboardButton>
+                            ))
+                        }
+                    </div>
+                </li>
+            ))
+        }
+</section>
+
+<style lang="scss">
+@import '@/styles/_Variables.scss';
+
+.experiments-list {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    list-style-type: none;
+    margin: 0 auto 8rem;
+    max-width: $breakpoint-md;
+
+    // @media (min-width: $breakpoint-md) {
+    //     & {
+    //         grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    //     }
+    // }
+}
+
+.experiment {
+    background: #FFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.1), 0 0.1875rem 0.5rem rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+
+    & img {
+        border-radius: 0.25rem;
+    }
+
+    & h3 {
+        margin-bottom: 0.5rem;
+    }
+}
+
+.experiment-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 0 0.5rem;
+
+    & .kbd-button {
+        flex: 1 0 auto;
+        gap: 0.5rem;
+    }
+}
+</style>

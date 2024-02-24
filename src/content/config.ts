@@ -31,16 +31,17 @@ const projectsCollection = defineCollection({
 
 const experimentsCollection = defineCollection({
     type: 'content',
-    schema: z.object({
+    schema: ({ image }) => z.object({
         title: z.string(),
+        date: z.date(),
         description: z.string(),
         image: z.object({
-            src: z.string(),
-            alt: z.string(),
+            src: image(),
+            alt: z.string()
         }),
-        link: z.string(),
+        link: z.string()
     })
-});
+})
 
 // 3. Export a single `collections` object to register your collection(s)
 //    This key should match your collection directory name in "src/content"

@@ -1,0 +1,153 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+import { techIcon } from '@/utils/techIcon'
+
+// import BillyAvatar from '@/components/Base/BillyAvatar.astro'
+import Layout from '@/layouts/Layout.astro'
+import KeyboardButton from '@/components/base/KeyboardButton.astro'
+
+type Props = {
+    item: CollectionEntry<'experiments'>
+}
+
+function formattedDate(date: Date) {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' }
+    return {
+        fullDate: new Intl.DateTimeFormat('en-US', options).format(date),
+        year: new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(date),
+        month: new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date),
+        day: new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
+    }
+}
+
+export const getStaticPaths = async () => {
+    const experimentItems = await getCollection('experiments')
+    const paths = experimentItems.map((item) => {
+        return {
+            params: {
+                slug: item.slug
+            },
+            props: {
+                item
+            }
+        }
+    });
+    return paths
+}
+
+const { item } = Astro.props as Props
+const { Content } = await item.render()
+---
+
+<Layout title={ item.data.title }>
+    <section class="content">
+        <div class="experiment-nav">
+            <KeyboardButton href="/">
+                <svg class="line-icon" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M5 12l14 0" />
+                    <path d="M5 12l4 4" />
+                    <path d="M5 12l4 -4" />
+                </svg>
+                Home
+            </KeyboardButton>
+        </div>
+        {item.data.draft && (
+            <span class="draft-notice">Draft</span>
+        )}
+        <h1 class="experiment-title">{ item.data.title }</h1>
+        <p class="experiment-date">
+            <svg class="line-icon" width="12" height="12" viewBox="0 0 24 24">
+                <path d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
+                <path d="M16 3l0 4" />
+                <path d="M8 3l0 4" />
+                <path d="M4 11l16 0" />
+            </svg>
+            { formattedDate(item.data.date).year }
+        </p>
+        <Image
+            class="experiment-banner-img"
+            src={item.data.image.src}
+            alt={item.data.image.alt}
+            width="768"
+            height="706"
+            format="webp"
+        />
+        <Content />
+        <div class="experiment-nav">
+            <KeyboardButton href="/">
+                <svg class="line-icon" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M5 12l14 0" />
+                    <path d="M5 12l4 4" />
+                    <path d="M5 12l4 -4" />
+                </svg>
+                Home
+            </KeyboardButton>
+        </div>
+    </section>
+</Layout>
+
+<style lang="scss">
+@import '@/styles/_Variables.scss';
+
+.experiment-nav {
+    margin: 0rem 0 1rem;
+    padding: 0.5rem 0;
+
+    @media (min-width: $breakpoint-sm) {
+        margin: 1rem 0 2rem;
+        padding: 1rem 0;
+    }
+
+    & .line-icon {
+        margin-right: 0.5rem;
+    }
+}
+
+.experiment-date {
+    align-items: center;
+    color: rgba(11, 14, 19, 0.7);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+    gap: 0.5rem;
+
+    & .line-icon {
+        height: 1rem;
+        opacity: 0.75;
+        stroke-width: 2.5;
+        width: 1rem;
+    }
+}
+
+.experiment-banner-img {
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+    margin: 1rem 0 2rem;
+}
+
+.experiment-title {
+    font-size: 2.25rem;
+    margin-bottom: 0.125rem;
+
+    @media (min-width: $breakpoint-xs) {
+        font-size: 2.5rem;
+    }
+
+    @media (min-width: $breakpoint-sm) {
+        font-size: 3rem;
+    }
+}
+
+.draft-notice {
+    background: rgba(255, 233, 135, 0.35);
+    border: 1px solid rgba(85, 69, 0, 0.2);
+    border-radius: 0.5rem;
+    color: rgb(85, 69, 0);
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
+</style>
