@@ -9,6 +9,7 @@ import { techIcon } from '@/utils/techIcon'
 // import BillyAvatar from '@/components/Base/BillyAvatar.astro'
 import Layout from '@/layouts/Layout.astro'
 import KeyboardButton from '@/components/base/KeyboardButton.astro'
+import { isTemplateMiddle } from 'typescript';
 
 type Props = {
     item: CollectionEntry<'experiments'>
@@ -55,9 +56,6 @@ const { Content } = await item.render()
                 Home
             </KeyboardButton>
         </div>
-        {item.data.draft && (
-            <span class="draft-notice">Draft</span>
-        )}
         <h1 class="experiment-title">{ item.data.title }</h1>
         <p class="experiment-date">
             <svg class="line-icon" width="12" height="12" viewBox="0 0 24 24">
@@ -76,6 +74,15 @@ const { Content } = await item.render()
             height="706"
             format="webp"
         />
+        <div style="display: flex; justify-content: center;">
+            <KeyboardButton
+                href={item.data.link}
+                target="_blank"
+                size="lg"
+            >
+                View Live Demo
+            </KeyboardButton>
+        </div>
         <Content />
         <div class="experiment-nav">
             <KeyboardButton href="/">
