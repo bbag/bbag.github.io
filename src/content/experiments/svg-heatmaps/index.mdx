@@ -6,6 +6,8 @@ image: { src: './svg-heatmap.png', alt: 'SVG filter heatmap thumbnail' }
 link: https://codepen.io/bbagg/pen/yLwWXvx
 ---
 
+import Visualizer from './Visualizer.astro'
+
 SVGs (and especially their filters) are really, *really* cool. I also tend to get injured doing Brazilian jiu-jitsu, *a lot*.
 
 So I figured why not combine these two for a cool little code experiment.
@@ -41,3 +43,5 @@ So for example, `<feFuncR type="table" tableValues="0 1 0"></feFuncR>` means “
 (Next: embed an interactive widget for toying with the table values to show how they affect the final filter)
 
 (Then: will talk about the process of building the final SVG and the CodePen demo itself... stay tuned!)
+
+<Visualizer />

@@ -1,0 +1,45 @@
+---
+
+---
+
+<div>
+    <p>Original gradient:</p>
+    <svg viewBox="0 0 200 10">
+        <rect x="0" y="0" width="200" height="10" />
+    </svg>
+    <p class="yolo">Filtered gradient:</p>
+    <svg viewBox="0 0 200 10">
+        <filter id="heatmap-filter" color-interpolation-filters="sRGB">
+            <!-- Crank up the exposure just a tad -->
+            <feComponentTransfer>
+                <feFuncR type="table" tableValues="0 0.3 0.6 0.9 1" />
+                <feFuncG type="table" tableValues="0 0.3 0.6 0.9 1" />
+                <feFuncB type="table" tableValues="0 0.3 0.6 0.9 1" />
+            </feComponentTransfer>
+                <!-- Turn black-white gradient into blue-green-yellow-red gradient -->
+            <feComponentTransfer>
+                <feFuncR type="table" tableValues="0.165 0.094 0.192 0.949 0.984" />
+                <feFuncG type="table" tableValues="0.239 0.353 0.667 0.882 0.027" />
+                <feFuncB type="table" tableValues="0.361 0.647 0.31  0.129 0.078" />
+                <!-- <feFuncR type="table" tableValues="0.043 0.094 0.192 0.949 0.984" />
+                <feFuncG type="table" tableValues="0.047 0.353 0.667 0.882 0.027" />
+                <feFuncB type="table" tableValues="0.055 0.647 0.31  0.129 0.078" /> -->
+            </feComponentTransfer>
+        </filter>
+        <rect x="0" y="0" width="200" height="10" filter="url(#heatmap-filter)" />
+    </svg>
+</div>
+
+<style>
+svg {
+    margin-bottom: 2rem;
+}
+
+.yolo {
+    color: blue;
+}
+</style>
+
+<script>
+console.log('astro component loaded')
+</script>
