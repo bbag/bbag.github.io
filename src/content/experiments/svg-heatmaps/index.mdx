@@ -7,10 +7,14 @@ link: https://codepen.io/bbagg/pen/yLwWXvx
 ---
 
 import Visualizer from './Visualizer.astro'
+import { Image } from 'astro:assets'
+import Trees from './trees.jpg'
 
 SVGs (and especially their filters) are really, *really* cool. I also tend to get injured doing Brazilian jiu-jitsu, *a lot*.
 
 So I figured why not combine these two for a cool little code experiment.
+
+## The magic of `<feComponentTransfer>`
 
 When I learned about the `<feComponentTransfer>` filter and how it basically applies a gradient map to an image, the idea popped into my head to try a “heatmap” effect to see where my most common (and most severe) injuries were located. Best case, I learn what to strengthen up to prevent more injuries; worst case, I know what to watch out for in the future. 😅
 
@@ -18,9 +22,9 @@ The `<feComponentTransfer>` filter works like this:
 
 ```html
 <svg>
-    <!-- 1: Define your filter -->
+    <!-- 1. Define your filter -->
     <filter id="heatmap">
-        <!-- 2: Add the feComponentTransfer effect -->
+        <!-- 2. Add the feComponentTransfer effect -->
         <feComponentTransfer>
             <!-- Add a function for each channel (red, green, blue, alpha) -->
             <feFuncR type="table" tableValues="0 1" />
@@ -36,12 +40,80 @@ On each transfer function element (e.g. `<feFuncR>`) we set the `type="table"` a
 
 Any values in between them also get interpolated (with `0` being the min and `1` being the max).
 
-So for example, `<feFuncR type="table" tableValues="0 1 0"></feFuncR>` means “for black areas of the image, have no red color whatsoever, for halfway-bright areas of the image have maximum red, and for white areas of the image have no red again.” It'd look something like this:
+So for example, `<feFuncR type="table" tableValues="0 1 0"></feFuncR>` means “for black areas of the image, have no red color whatsoever, for halfway-bright areas of the image have maximum red, and for white areas of the image have no red again.”
 
-(Will show three gradients here: one with the filter itself, one with an image, and one with the filter applied to the image)
+<p>To show it in action, we’ll start with a simple black and white gradient and apply it to a rectangle in the SVG:</p>
+```html
+<linearGradient id="gradient">
+    <stop stop-color="black" offset="0%" />
+    <stop stop-color="white" offset="100%" />
+</linearGradient>
+<rect width="200" height="10" fill="url(#gradient)" />
+```
 
-(Next: embed an interactive widget for toying with the table values to show how they affect the final filter)
+Result:
 
-(Then: will talk about the process of building the final SVG and the CodePen demo itself... stay tuned!)
+<svg viewBox="0 0 200 10" style="margin-bottom: 2rem;">
+    <linearGradient id="bw-gradient">
+        <stop stop-color="black" offset="0%" />
+        <stop stop-color="white" offset="100%" />
+    </linearGradient>
+    <rect id="svgRect" x="0" y="0" width="200" height="10" fill="url(#bw-gradient)" />
+</svg>
+
+Then we’ll add a filter to the rectangle which basically says “the black end of the spectrum should only be blue, and the white end of the spectrum should only be yellow (i.e. max red and green values):”
+
+```html
+<!-- 1. Define your filter -->
+<filter id="basic-filter" color-interpolation-filters="sRGB">
+    <feComponentTransfer>
+        <!-- 2. Have 0% red at black and 100% red at white -->
+        <feFuncR type="table" tableValues="0 1" />
+        <!-- 3. Have 0% green at black and 100% green at white -->
+        <feFuncG type="table" tableValues="0 1" />
+        <!-- 4. Have 100% blue at black and 0% blue at white -->
+        <feFuncB type="table" tableValues="1 0" />
+    </feComponentTransfer>
+</filter>
+<!-- 5. Apply the filter to the gradient rectangle -->
+<rect x="0" y="0" width="200" height="10"
+    fill="url(#gradient)"
+    filter="url(#basic-filter)"
+/>
+```
+
+New result:
+
+<svg viewBox="0 0 200 10" style="margin-bottom: 2rem;">
+    <filter id="basic-filter" color-interpolation-filters="sRGB">
+        <feComponentTransfer>
+            <feFuncR type="table" tableValues="0 1" />
+            <feFuncG type="table" tableValues="0 1" />
+            <feFuncB type="table" tableValues="1 0" />
+        </feComponentTransfer>
+    </filter>
+    <use href="#svgRect" filter="url(#basic-filter)" />
+</svg>
+
+You can apply that filter to an image too, which is extra neat:
+
+<figure>
+    <div style="display: grid; gap: 2rem; grid-template-columns: 1fr 1fr; margin-bottom: 1rem;">
+        <Image src={Trees} alt="Trees" style="border-radius: 0.5rem;" />
+        <Image src={Trees} alt="Trees" style="border-radius: 0.5rem; filter: url(#basic-filter);" />
+    </div>
+    <figcaption>Photo credit to <a href="https://www.pexels.com/@jplenio/" target="_blank" rel="noreferrer nofollow noopener">Johannes Plenio</a> on Pexels.</figcaption>
+</figure>
+
+
+## Adding multiple color stops
+
+Now comes the fun part: you can add as many stops as you like in between the starting and ending `tableValues` values for each channel, and crank those values up and down anyway you like.
+
+Here’s a fun playground — add/remove colors below and click the color picker to customize each one, then notice how the values in the code update:
 
 <Visualizer />
+
+## Building the final heatmap SVG
+
+(Coming up next: will talk about the process of building the final SVG and the CodePen demo itself... stay tuned!)
