@@ -21,7 +21,35 @@ const code = `<feFuncR type="table" tableValues="${colors.map(color => color.r).
 <feFuncG type="table" tableValues="${colors.map(color => color.g).join(' ')}" />
 <feFuncB type="table" tableValues="${colors.map(color => color.b).join(' ')}" />
 `
+
+function rgbToHex(rgb: { r: number, g: number, b: number }) {
+    const newR = Math.round(rgb.r * 255)
+    const newG = Math.round(rgb.g * 255)
+    const newB = Math.round(rgb.b * 255)
+    const hex = `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`
+    console.log(hex)
+    return hex
+}
 ---
+
+<table class="rgb-table">
+    <tbody>
+        <tr>
+            <th>feFuncR</th>
+            <th>feFuncG</th>
+            <th>feFuncB</th>
+            <th></th>
+        </tr>
+        {colors.map(color => (
+            <tr>
+                <td><input type="text" value={color.r} /></td>
+                <td><input type="text" value={color.g} /></td>
+                <td><input type="text" value={color.b} /></td>
+                <td><input type="color" value={rgbToHex(color)} /></td>
+            </tr>
+        ))}
+    </tbody>
+</table>
 
 <div class="gradient-preview">
     <div class="color-stops">
@@ -32,7 +60,6 @@ const code = `<feFuncR type="table" tableValues="${colors.map(color => color.r).
             ></span>
         ))}
     </div>
-
     <svg viewBox="0 0 200 25">
         <filter id="heatmap-filter" color-interpolation-filters="sRGB">
             <feComponentTransfer>
@@ -58,34 +85,6 @@ const code = `<feFuncR type="table" tableValues="${colors.map(color => color.r).
     </div>
     <figcaption>Photo credit to <a href="https://www.pexels.com/@pixabay/" target="_blank" rel="noreferrer nofollow noopener">Pixabay</a> on Pexels.</figcaption>
 </figure>
-
-<!-- <p>To show it in action, we’ll start with a simple black and white gradient and apply it to a rectangle in the SVG:</p>
-<Code theme={codeTheme} code={`<linearGradient id="gradient">
-    <stop stop-color="black" offset="0%" />
-    <stop stop-color="white" offset="100%" />
-</linearGradient>
-<rect width="200" height="10" fill="url(#gradient)" />`} lang="html" />
-<svg viewBox="0 0 200 10">
-    <filter id="basic-filter" color-interpolation-filters="sRGB">
-        <feComponentTransfer>
-            <feFuncR type="table" tableValues="1 0" />
-            <feFuncG type="table" tableValues="0 0" />
-            <feFuncB type="table" tableValues="0 1" />
-        </feComponentTransfer>
-    </filter>
-    <filter id="heatmap-filter" color-interpolation-filters="sRGB">
-        <feComponentTransfer>
-            <feFuncR type="table" tableValues="0.165 0.094 0.192 0.949 0.984" />
-            <feFuncG type="table" tableValues="0.239 0.353 0.667 0.882 0.027" />
-            <feFuncB type="table" tableValues="0.361 0.647 0.31  0.129 0.078" />
-        </feComponentTransfer>
-    </filter>
-    <linearGradient id="bw-gradient">
-        <stop stop-color="black" offset="0%" />
-        <stop stop-color="white" offset="100%" />
-    </linearGradient>
-    <rect id="svgRect" x="0" y="0" width="200" height="10" fill="url(#bw-gradient)" />
-</svg> -->
 
 <style lang="scss">
 svg {
@@ -123,6 +122,15 @@ svg {
         top: 0;
         transform: translateX(-50%) rotate(45deg);
         width: 1.25rem;
+    }
+}
+
+.rgb-table {
+    border-collapse: collapse;
+
+    & input[type="text"] {
+        padding: 0.125rem 0.25rem;
+        width: 5rem;
     }
 }
 </style>
