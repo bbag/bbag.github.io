@@ -57,33 +57,33 @@ function rgbToHex(rgb: { r: number, g: number, b: number }) {
                     <td><input type="number" data-channel="g" value={color.g} min="0" max="1" step="0.001" /></td>
                     <td><input type="number" data-channel="b" value={color.b} min="0" max="1" step="0.001" /></td>
                     <td class="rgb-table-actions">
-                        <KeyboardButton style="height: 2em;" isIcon disabled>
+                        <button style="height: 2em;" data-move-stop-up>
                             <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
                                 <path d="M12 5l0 14" />
                                 <path d="M18 11l-6 -6" />
                                 <path d="M6 11l6 -6" />
                             </svg>
-                        </KeyboardButton>
-                        <KeyboardButton style="height: 2em;" isIcon disabled>
+                        </button>
+                        <button style="height: 2em;" data-move-stop-down>
                             <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
                                 <path d="M12 5l0 14" />
                                 <path d="M18 13l-6 6" />
                                 <path d="M6 13l6 6" />
                             </svg>
-                        </KeyboardButton>
-                        <KeyboardButton style="height: 2em;" isIcon isDanger disabled>
+                        </button>
+                        <button style="height: 2em;" data-delete-stop>
                             <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
                                 <path d="M18 6l-12 12" />
                                 <path d="M6 6l12 12" />
                             </svg>
-                        </KeyboardButton>
+                        </button>
                     </td>
                 </tr>
             ))}
         </tbody>
     </table>
     <div class="rgb-table-buttons">
-        <KeyboardButton size="lg" disabled>
+        <KeyboardButton size="lg" id="add-color-stop">
             Add New Color Stop
         </KeyboardButton>
     </div>
@@ -125,10 +125,55 @@ function rgbToHex(rgb: { r: number, g: number, b: number }) {
 </figure>
 
 <script>
-const colorInputs = document.querySelectorAll('.rgb-table input[type="color"]') as NodeListOf<HTMLInputElement>
-const feFuncOutputTableValues = document.querySelectorAll('#fefunc-output .line span:nth-child(11)') as NodeListOf<HTMLSpanElement>
+// ------------------------------------------------ //
+// Constants                                        //
+// ------------------------------------------------ //
 
-console.log(feFuncOutputTableValues)
+const rgbTable = document.querySelector('.rgb-table table') as HTMLTableElement
+const colorInputs = rgbTable.querySelectorAll('input[type="color"]') as NodeListOf<HTMLInputElement>
+const feFuncOutputTableValues = document.querySelectorAll('#fefunc-output .line span:nth-child(11)') as NodeListOf<HTMLSpanElement>
+const deleteColorStopButtons = rgbTable.querySelectorAll('button[data-delete-stop]') as NodeListOf<HTMLButtonElement>
+
+console.log(deleteColorStopButtons)
+
+// ------------------------------------------------ //
+// Utils                                            //
+// ------------------------------------------------ //
+
+function hexToRgb(hex: string) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    return result
+        ? {
+            r: Math.round(parseInt(result[1], 16) / 255 * 1000) / 1000,
+            g: Math.round(parseInt(result[2], 16) / 255 * 1000) / 1000,
+            b: Math.round(parseInt(result[3], 16) / 255 * 1000) / 1000
+        }
+        : { r: 0, g: 0, b: 0 }
+}
+
+function handleDeleteColorStop(index: number) {
+    console.log('Deleting color stop ', index)
+
+    const tr = rgbTable.querySelector(`tr[data-stop="${index}"]`)
+
+    if (tr) {
+        tr.remove()
+    }
+}
+
+// ------------------------------------------------ //
+// Initial listeners                                //
+// ------------------------------------------------ //
+
+deleteColorStopButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        handleDeleteColorStop(parseInt(button.closest('tr')?.getAttribute('data-stop') || '0'))
+    })
+})
+
+// ------------------------------------------------ //
+// Color inputs                                     //
+// ------------------------------------------------ //
 
 colorInputs.forEach(input => {
     // Color stop index
@@ -146,7 +191,6 @@ colorInputs.forEach(input => {
 
     // Color stop pin
     const colorStopPin = document.querySelector(`[data-stop-pin="${index}"]`) as HTMLSpanElement
-    console.log('colorStopPin', colorStopPin)
 
     input.addEventListener('input', () => {
         let { r, g, b } = hexToRgb(input.value)
@@ -182,19 +226,66 @@ colorInputs.forEach(input => {
     })
 })
 
-function hexToRgb(hex: string) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-    return result
-        ? {
-            r: Math.round(parseInt(result[1], 16) / 255 * 1000) / 1000,
-            g: Math.round(parseInt(result[2], 16) / 255 * 1000) / 1000,
-            b: Math.round(parseInt(result[3], 16) / 255 * 1000) / 1000
-        }
-        : { r: 0, g: 0, b: 0 }
-}
+// ------------------------------------------------ //
+// Add New Color Stop button                        //
+// ------------------------------------------------ //
+
+const addColorStopButton = document.getElementById('add-color-stop') as HTMLButtonElement
+
+addColorStopButton.addEventListener('click', () => {
+    const tr = document.createElement('tr')
+    const stopIndex = document.querySelectorAll('.rgb-table tr[data-stop]').length
+
+    // Set the data-stop attribute to 1+ the number of stops
+    tr.setAttribute('data-stop', stopIndex.toString())
+
+    tr.innerHTML = `<td>
+        <span class="color-picker">
+            <input type="color" value="#000000" />
+            <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
+                <path d="M11 7l6 6M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z" stroke="rgba(0, 0, 0, 0.5)" stroke-width="4.75" />
+                <path d="M11 7l6 6M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z" stroke="#FFF" />
+            </svg>
+        </span>
+    </td>
+    <td><input type="number" data-channel="r" value="0" min="0" max="1" step="0.001" /></td>
+    <td><input type="number" data-channel="g" value="0" min="0" max="1" step="0.001" /></td>
+    <td><input type="number" data-channel="b" value="0" min="0" max="1" step="0.001" /></td>
+    <td class="rgb-table-actions">
+        <button style="height: 2em;">
+            <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
+                <path d="M12 5l0 14" />
+                <path d="M18 11l-6 -6" />
+                <path d="M6 11l6 -6" />
+            </svg>
+        </button>
+        <button style="height: 2em;">
+            <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
+                <path d="M12 5l0 14" />
+                <path d="M18 13l-6 6" />
+                <path d="M6 13l6 6" />
+            </svg>
+        </button>
+        <button style="height: 2em;">
+            <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
+                <path d="M18 6l-12 12" />
+                <path d="M6 6l12 12" />
+            </svg>
+        </button>
+    </td>`
+
+    const rgbTable = document.querySelector('.rgb-table tbody') as HTMLElement
+
+    rgbTable.appendChild(tr)
+
+    // Disable the button if we're at 10 color stops
+    if (stopIndex >= 9) {
+        addColorStopButton.disabled = true
+    }
+})
 </script>
 
-<style lang="scss">
+<style lang="scss" is:global>
 .heatmap-gradient-preview {
     margin-bottom: 2rem;
 }
