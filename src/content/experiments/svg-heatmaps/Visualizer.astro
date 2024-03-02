@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets'
 import { Code } from 'astro:components'
 import Xray from './xray.jpg'
+import KeyboardButton from '@/components/base/KeyboardButton.astro'
 
 const codeTheme = 'material-theme-palenight'
 
@@ -27,40 +28,77 @@ function rgbToHex(rgb: { r: number, g: number, b: number }) {
     const newG = Math.round(rgb.g * 255)
     const newB = Math.round(rgb.b * 255)
     const hex = `#${newR.toString(16).padStart(2, '0')}${newG.toString(16).padStart(2, '0')}${newB.toString(16).padStart(2, '0')}`
-    console.log(hex)
     return hex
 }
 ---
 
-<table class="rgb-table">
-    <tbody>
-        <tr>
-            <th>feFuncR</th>
-            <th>feFuncG</th>
-            <th>feFuncB</th>
-            <th></th>
-        </tr>
-        {colors.map(color => (
+<div class="rgb-table">
+    <table>
+        <tbody>
             <tr>
-                <td><input type="text" value={color.r} /></td>
-                <td><input type="text" value={color.g} /></td>
-                <td><input type="text" value={color.b} /></td>
-                <td><input type="color" value={rgbToHex(color)} /></td>
+                <th></th>
+                <th><code>feFuncR</code></th>
+                <th><code>feFuncG</code></th>
+                <th><code>feFuncB</code></th>
+                <th></th>
             </tr>
-        ))}
-    </tbody>
-</table>
-
+            {colors.map((color, i) => (
+                <tr data-stop={i}>
+                    <td>
+                        <span class="color-picker">
+                            <input type="color" value={rgbToHex(color)} />
+                            <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M11 7l6 6M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z" stroke="rgba(0, 0, 0, 0.5)" stroke-width="4.75" />
+                                <path d="M11 7l6 6M4 16l11.7 -11.7a1 1 0 0 1 1.4 0l2.6 2.6a1 1 0 0 1 0 1.4l-11.7 11.7h-4v-4z" stroke="#FFF" />
+                            </svg>
+                        </span>
+                    </td>
+                    <td><input type="number" data-channel="r" value={color.r} min="0" max="1" step="0.001" /></td>
+                    <td><input type="number" data-channel="g" value={color.g} min="0" max="1" step="0.001" /></td>
+                    <td><input type="number" data-channel="b" value={color.b} min="0" max="1" step="0.001" /></td>
+                    <td class="rgb-table-actions">
+                        <KeyboardButton style="height: 2em;" isIcon disabled>
+                            <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M12 5l0 14" />
+                                <path d="M18 11l-6 -6" />
+                                <path d="M6 11l6 -6" />
+                            </svg>
+                        </KeyboardButton>
+                        <KeyboardButton style="height: 2em;" isIcon disabled>
+                            <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M12 5l0 14" />
+                                <path d="M18 13l-6 6" />
+                                <path d="M6 13l6 6" />
+                            </svg>
+                        </KeyboardButton>
+                        <KeyboardButton style="height: 2em;" isIcon isDanger disabled>
+                            <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
+                                <path d="M18 6l-12 12" />
+                                <path d="M6 6l12 12" />
+                            </svg>
+                        </KeyboardButton>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+    <div class="rgb-table-buttons">
+        <KeyboardButton size="lg" disabled>
+            Add New Color Stop
+        </KeyboardButton>
+    </div>
+</div>
 <div class="gradient-preview">
     <div class="color-stops">
-        {colors.map(color => (
+        {colors.map((color, i) => (
             <span
                 class="color-stop"
+                data-stop-pin={i}
                 style={`--bg: rgb(${calcBgColor(color)})`}
             ></span>
         ))}
     </div>
-    <svg viewBox="0 0 200 25">
+    <svg viewBox="0 0 200 25" class="heatmap-gradient-preview">
         <filter id="heatmap-filter" color-interpolation-filters="sRGB">
             <feComponentTransfer>
                 {/* <feFuncR type="table" tableValues="0.165 0.094 0.192 0.949 0.984" />
@@ -75,9 +113,9 @@ function rgbToHex(rgb: { r: number, g: number, b: number }) {
         <use href="#svgRect" y="15" />
     </svg>
 </div>
-
-<Code theme={codeTheme} code={code} lang="html" />
-
+<div id="fefunc-output">
+    <Code theme={codeTheme} code={code} lang="html" />
+</div>
 <figure>
     <div style="display: grid; gap: 2rem; grid-template-columns: 1fr 1fr; margin: 1rem 0;">
         <Image src={Xray} alt="X-ray" style="border-radius: 0.5rem;" />
@@ -86,8 +124,78 @@ function rgbToHex(rgb: { r: number, g: number, b: number }) {
     <figcaption>Photo credit to <a href="https://www.pexels.com/@pixabay/" target="_blank" rel="noreferrer nofollow noopener">Pixabay</a> on Pexels.</figcaption>
 </figure>
 
+<script>
+const colorInputs = document.querySelectorAll('.rgb-table input[type="color"]') as NodeListOf<HTMLInputElement>
+const feFuncOutputTableValues = document.querySelectorAll('#fefunc-output .line span:nth-child(11)') as NodeListOf<HTMLSpanElement>
+
+console.log(feFuncOutputTableValues)
+
+colorInputs.forEach(input => {
+    // Color stop index
+    const index = parseInt(input.closest('tr')?.getAttribute('data-stop') || '0')
+
+    // Number inputs
+    const inputR = input.closest('tr')?.querySelector('input[data-channel="r"]') as HTMLInputElement
+    const inputG = input.closest('tr')?.querySelector('input[data-channel="g"]') as HTMLInputElement
+    const inputB = input.closest('tr')?.querySelector('input[data-channel="b"]') as HTMLInputElement
+
+    // SVG filter values
+    const feFuncR = document.querySelector('#heatmap-filter feFuncR') as SVGFEFuncRElement
+    const feFuncG = document.querySelector('#heatmap-filter feFuncG') as SVGFEFuncGElement
+    const feFuncB = document.querySelector('#heatmap-filter feFuncB') as SVGFEFuncBElement
+
+    // Color stop pin
+    const colorStopPin = document.querySelector(`[data-stop-pin="${index}"]`) as HTMLSpanElement
+    console.log('colorStopPin', colorStopPin)
+
+    input.addEventListener('input', () => {
+        let { r, g, b } = hexToRgb(input.value)
+
+        // Update the number inputs
+        inputR.value = r.toString()
+        inputG.value = g.toString()
+        inputB.value = b.toString()
+
+        // Update values in the live SVG filter
+        const currentTableValuesR = feFuncR.getAttribute('tableValues')?.split(' ') || []
+        currentTableValuesR[index] = r.toString()
+        const newFeFuncR = currentTableValuesR.join(' ')
+        feFuncR.setAttribute('tableValues', newFeFuncR)
+
+        const currentTableValuesG = feFuncG.getAttribute('tableValues')?.split(' ') || []
+        currentTableValuesG[index] = g.toString()
+        const newFeFuncG = currentTableValuesG.join(' ')
+        feFuncG.setAttribute('tableValues', newFeFuncG)
+
+        const currentTableValuesB = feFuncB.getAttribute('tableValues')?.split(' ') || []
+        currentTableValuesB[index] = b.toString()
+        const newFeFuncB = currentTableValuesB.join(' ')
+        feFuncB.setAttribute('tableValues', newFeFuncB)
+
+        // Update values in the displayed SVG filter code
+        feFuncOutputTableValues[0].textContent = newFeFuncR
+        feFuncOutputTableValues[1].textContent = newFeFuncG
+        feFuncOutputTableValues[2].textContent = newFeFuncB
+
+        // Update the color of the color stop pin
+        colorStopPin.style.setProperty('--bg', input.value)
+    })
+})
+
+function hexToRgb(hex: string) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    return result
+        ? {
+            r: Math.round(parseInt(result[1], 16) / 255 * 1000) / 1000,
+            g: Math.round(parseInt(result[2], 16) / 255 * 1000) / 1000,
+            b: Math.round(parseInt(result[3], 16) / 255 * 1000) / 1000
+        }
+        : { r: 0, g: 0, b: 0 }
+}
+</script>
+
 <style lang="scss">
-svg {
+.heatmap-gradient-preview {
     margin-bottom: 2rem;
 }
 
@@ -114,7 +222,7 @@ svg {
         background-color: var(--bg, #FFF);
         border-radius: 1rem 1rem 0 1rem;
         border: 2px solid #FFF;
-        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0.125rem 0.375rem rgba(0, 20, 40, 0.375);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0.125rem 0.375rem rgba(0, 20, 40, 0.25);
         content: '';
         display: block;
         left: 0;
@@ -126,15 +234,91 @@ svg {
 }
 
 .rgb-table {
+    background: #FFF;
+    border: 1px solid #DFE3E9;
     border-collapse: collapse;
+    box-shadow: 0 1px 2px rgba(0,10,20,0.08);
+    border-radius: 0.5rem;
+    margin: 0 auto 1rem;
+    padding: 2rem;
 
-    & input[type="text"] {
-        padding: 0.125rem 0.25rem;
-        width: 5rem;
+    & table {
+        width: 100%;
+    }
+
+    & th,
+    & td {
+        padding: 0.25rem;
+    }
+
+    & th {
+        font-size: 1.125rem;
+    }
+
+    & input[type="number"] {
+        border: 1px solid #A9AEB6;
+        border-radius: 0.25rem;
+        height: 2em;
+        padding: 0.25rem 0.375rem;
+        width: 5.5em;
+    }
+
+    & input[type="color"] {
+        border: none;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        height: 2em;
+        padding: 0;
+        width: 2em;
+
+        &::-webkit-color-swatch-wrapper {
+            padding: 0; 
+        }
+
+        &::-webkit-color-swatch {
+            border: none;
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+        }
     }
 }
-</style>
 
-<script>
-console.log('astro component loaded')
-</script>
+.color-picker {
+    align-items: center;
+    border-radius: 2em;
+    display: grid;
+    height: 2em;
+    overflow: hidden;
+    place-items: center;
+    width: 2em;
+
+    & > * {
+        grid-area: 1 / 1;
+    }
+
+    & svg {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 150ms ease;
+
+        tr:hover &,
+        tr:focus-within & {
+            opacity: 1;
+        }
+    }
+}
+
+.rgb-table-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+}
+
+.rgb-table-buttons {
+    justify-content: center;
+    display: flex;
+    margin: 1rem 0 0;
+}
+</style>
