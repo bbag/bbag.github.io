@@ -6,12 +6,20 @@ import KeyboardButton from '@/components/base/KeyboardButton.astro'
 
 const codeTheme = 'material-theme-palenight'
 
+// const colors = [
+//     { r: 0.165, g: 0.239, b: 0.361 },
+//     { r: 0.094, g: 0.353, b: 0.647 },
+//     { r: 0.192, g: 0.667, b: 0.31 },
+//     { r: 0.949, g: 0.882, b: 0.129 },
+//     { r: 0.984, g: 0.027, b: 0.078 }
+// ]
+
 const colors = [
-    { r: 0.165, g: 0.239, b: 0.361 },
-    { r: 0.094, g: 0.353, b: 0.647 },
-    { r: 0.192, g: 0.667, b: 0.31 },
-    { r: 0.949, g: 0.882, b: 0.129 },
-    { r: 0.984, g: 0.027, b: 0.078 }
+    { r: 0.17, g: 0.24, b: 0.36 },
+    { r: 0.09, g: 0.35, b: 0.65 },
+    { r: 0.19, g: 0.67, b: 0.31 },
+    { r: 0.95, g: 0.88, b: 0.13 },
+    { r: 0.99, g: 0.03, b: 0.08 }
 ]
 
 function calcBgColor(color: { r: number, g: number, b: number }) {
@@ -152,13 +160,23 @@ function hexToRgb(hex: string) {
 }
 
 function handleDeleteColorStop(index: number) {
-    console.log('Deleting color stop ', index)
-
     const tr = rgbTable.querySelector(`tr[data-stop="${index}"]`)
-
-    if (tr) {
-        tr.remove()
+    if (tr) tr.remove()
+    
+    // Check if 2 or fewer color stops are now present, and if so then disable the remaining delete buttons
+    if (rgbTable.querySelectorAll('tr[data-stop]').length <= 2) {
+        disableAllDeleteButtons()
     }
+}
+
+function enableAllDeleteButtons() {
+    const deleteButtons = rgbTable.querySelectorAll('button[data-delete-stop]') as NodeListOf<HTMLButtonElement>
+    deleteButtons.forEach(button => button.removeAttribute('disabled'))
+}
+
+function disableAllDeleteButtons() {
+    const deleteButtons = rgbTable.querySelectorAll('button[data-delete-stop]') as NodeListOf<HTMLButtonElement>
+    deleteButtons.forEach(button => button.disabled = true)
 }
 
 // ------------------------------------------------ //
@@ -281,6 +299,11 @@ addColorStopButton.addEventListener('click', () => {
     // Disable the button if we're at 10 color stops
     if (stopIndex >= 9) {
         addColorStopButton.disabled = true
+    }
+
+    // Check if more than 2 color stops are now present, and if so then enable all the delete buttons
+    if (rgbTable.querySelectorAll('tr[data-stop]').length > 2) {
+        enableAllDeleteButtons()
     }
 })
 </script>
