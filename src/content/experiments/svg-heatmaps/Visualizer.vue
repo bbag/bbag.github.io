@@ -88,27 +88,27 @@ const colors = ref<Color[]>([
     { r: 0.99, g: 0.03, b: 0.08 }
 ])
 
-// Update the filter's displayed code values whenever a color changes
-watch(
-    () => colors,
-    () => {
-        const feFuncOutputR = document.querySelector('#fefunc-output code > span:nth-child(1) span:nth-child(11)') as HTMLSpanElement
-        const feFuncOutputG = document.querySelector('#fefunc-output code > span:nth-child(2) span:nth-child(11)') as HTMLSpanElement
-        const feFuncOutputB = document.querySelector('#fefunc-output code > span:nth-child(3) span:nth-child(11)') as HTMLSpanElement
-
-        if (!feFuncOutputR || !feFuncOutputG || !feFuncOutputB) return
-
-        feFuncOutputR.innerText = colors.value.map(color => color.r).join(' ')
-        feFuncOutputG.innerText = colors.value.map(color => color.g).join(' ')
-        feFuncOutputB.innerText = colors.value.map(color => color.b).join(' ')
-    },
-    { deep: true }
-)
+// Output feFunc refs
+const feFuncOutputR = ref<HTMLSpanElement>()
+const feFuncOutputG = ref<HTMLSpanElement>()
+const feFuncOutputB = ref<HTMLSpanElement>()
 
 // Output values for the tableValues attributes of the filter
 const feFuncRValues = computed(() => colors.value.map(color => color.r).join(' '))
 const feFuncGValues = computed(() => colors.value.map(color => color.g).join(' '))
 const feFuncBValues = computed(() => colors.value.map(color => color.b).join(' '))
+
+// Update the filter's displayed code values whenever a color changes
+watch(
+    () => colors,
+    () => {
+        if (!feFuncOutputR.value || !feFuncOutputG.value || !feFuncOutputB.value) return
+        feFuncOutputR.value.innerText = feFuncRValues.value
+        feFuncOutputG.value.innerText = feFuncGValues.value
+        feFuncOutputB.value.innerText = feFuncBValues.value
+    },
+    { deep: true }
+)
 </script>
 
 <template>
@@ -210,6 +210,9 @@ const feFuncBValues = computed(() => colors.value.map(color => color.b).join(' '
             <use href="#svgRect" y="15" />
         </svg>
     </div>
+    <div id="fefunc-output"><pre class="astro-code material-theme-palenight" style="background-color:#292D3E;color:#babed8; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color:#89DDFF">&lt;</span><span style="color:#F07178">feFuncR</span><span style="color:#C792EA"> type</span><span style="color:#89DDFF">=</span><span style="color:#89DDFF">"</span><span style="color:#C3E88D">table</span><span style="color:#89DDFF">"</span><span style="color:#C792EA"> tableValues</span><span style="color:#89DDFF">=</span><span style="color:#89DDFF">"</span><span style="color:#C3E88D" ref="feFuncOutputR">0.17 0.09 0.19 0.95 0.99</span><span style="color:#89DDFF">"</span><span style="color:#89DDFF"> /&gt;</span></span>
+<span class="line"><span style="color:#89DDFF">&lt;</span><span style="color:#F07178">feFuncG</span><span style="color:#C792EA"> type</span><span style="color:#89DDFF">=</span><span style="color:#89DDFF">"</span><span style="color:#C3E88D">table</span><span style="color:#89DDFF">"</span><span style="color:#C792EA"> tableValues</span><span style="color:#89DDFF">=</span><span style="color:#89DDFF">"</span><span style="color:#C3E88D" ref="feFuncOutputG">0.24 0.35 0.67 0.88 0.03</span><span style="color:#89DDFF">"</span><span style="color:#89DDFF"> /&gt;</span></span>
+<span class="line"><span style="color:#89DDFF">&lt;</span><span style="color:#F07178">feFuncB</span><span style="color:#C792EA"> type</span><span style="color:#89DDFF">=</span><span style="color:#89DDFF">"</span><span style="color:#C3E88D">table</span><span style="color:#89DDFF">"</span><span style="color:#C792EA"> tableValues</span><span style="color:#89DDFF">=</span><span style="color:#89DDFF">"</span><span style="color:#C3E88D" ref="feFuncOutputB">0.36 0.65 0.31 0.13 0.08</span><span style="color:#89DDFF">"</span><span style="color:#89DDFF"> /&gt;</span></span></code></pre></div>
 </template>
 
 <style lang="scss" scoped>
