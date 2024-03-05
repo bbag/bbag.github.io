@@ -126,7 +126,47 @@ Here’s a fun playground — add/remove colors below and click the color picker
     <figcaption>Photo credit to <a href="https://www.pexels.com/@pixabay/" target="_blank" rel="noreferrer nofollow noopener">Pixabay</a> on Pexels.</figcaption>
 </figure>
 
-{/* <Visualizer /> */}
+## Creating the heatmap transition effect
+
+In the final demo, you might’ve noticed that the heatmap colors don’t simply fade from one to the other when the values change. Instead, they gradually “move” through the gradient as the values go up and down.
+
+The trick to pulling this off is to have a path be filled with pure white, set its *opacity* according to how “warm” or “cold” it should be in the heatmap, apply a blur to that white element (as much or as little as you like), group it with another path filled with a pure black background, and apply the heatmap filter to the entire group.
+
+That was a bit of a mouthful, but the code is actually way simpler:
+
+```html
+<svg viewBox="0 0 100 100">
+    <!-- 1. Apply the mask to the group -->
+    <g style="filter: url(#heatmap);">
+        <!-- 2. Set the black background -->
+        <rect fill="black" x="0" y="0" width="100" height="100" />
+        <!-- 3. Set the white foreground with some opacity -->
+        <circle
+            fill="white" cx="50" cy="50" r="20"
+            style="filter: blur(8px); opacity: 0.75;"
+        />
+    </g>
+</svg>
+```
+
+The result (with and without the filter applied):
+
+<div style="display: grid; gap: 2rem; grid-template-columns: 1fr 1fr; margin-bottom: 1rem;">
+    <svg viewBox="0 0 100 100" style="width: 100%;">
+        <g style="filter: url(#heatmap-filter);">
+            <rect fill="black" x="0" y="0" width="100" height="100" />
+            <circle fill="white" cx="50" cy="50" r="20" style="filter: blur(8px); opacity: 0.75;" />
+            <title>SVG with the filter applied</title>
+        </g>
+    </svg>
+    <svg viewBox="0 0 100 100" style="width: 100%;">
+        <g>
+            <rect fill="black" x="0" y="0" width="100" height="100" />
+            <circle fill="white" cx="50" cy="50" r="20" style="filter: blur(8px); opacity: 0.75;" />
+            <title>The same SVG with no filter applied</title>
+        </g>
+    </svg>
+</div>
 
 ## Building the final heatmap SVG
 

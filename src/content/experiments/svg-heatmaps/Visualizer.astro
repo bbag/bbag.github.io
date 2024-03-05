@@ -101,9 +101,6 @@ function rgbToHex(rgb: { r: number, g: number, b: number }) {
     <svg viewBox="0 0 200 25" class="heatmap-gradient-preview">
         <filter id="heatmap-filter" color-interpolation-filters="sRGB">
             <feComponentTransfer>
-                {/* <feFuncR type="table" tableValues="0.165 0.094 0.192 0.949 0.984" />
-                <feFuncG type="table" tableValues="0.239 0.353 0.667 0.882 0.027" />
-                <feFuncB type="table" tableValues="0.361 0.647 0.31  0.129 0.078" /> */}
                 <feFuncR type="table" tableValues={colors.map(color => color.r).join(' ')} />
                 <feFuncG type="table" tableValues={colors.map(color => color.g).join(' ')} />
                 <feFuncB type="table" tableValues={colors.map(color => color.b).join(' ')} />

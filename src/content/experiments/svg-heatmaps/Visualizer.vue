@@ -109,6 +109,34 @@ watch(
     },
     { deep: true }
 )
+
+// Stop management
+function moveStopUp(i: number) {
+    if (i <= 0) return
+    const temp = colors.value[i - 1]
+    colors.value[i - 1] = colors.value[i]
+    colors.value[i] = temp
+}
+
+function moveStopDown(i: number) {
+    if (i >= colors.value.length - 1) return
+    const temp = colors.value[i]
+    colors.value[i] = colors.value[i + 1]
+    colors.value[i + 1] = temp
+}
+
+function deleteStop(i: number) {
+    if (colors.value.length < 3) return
+    colors.value.splice(i, 1)
+}
+
+function addStop() {
+    // Generate random RGB values between 0 and 1, rounded to 2 decimal places
+    const r = Math.round(Math.random() * 100) / 100
+    const g = Math.round(Math.random() * 100) / 100 
+    const b = Math.round(Math.random() * 100) / 100 
+    colors.value.push({ r, g, b })
+}
 </script>
 
 <template>
@@ -157,21 +185,36 @@ watch(
                             />
                         </td>
                         <td class="rgb-table-actions">
-                            <button style="height: 2em;" data-move-stop-up>
+                            <button
+                                class="kbd-button"
+                                data-is-icon
+                                @click="moveStopUp(i)"
+                                :disabled="i < 1"
+                            >
                                 <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
                                     <path d="M12 5l0 14" />
                                     <path d="M18 11l-6 -6" />
                                     <path d="M6 11l6 -6" />
                                 </svg>
                             </button>
-                            <button style="height: 2em;" data-move-stop-down>
+                            <button
+                                class="kbd-button"
+                                data-is-icon
+                                @click="moveStopDown(i)"
+                                :disabled="i >= colors.length - 1"
+                            >
                                 <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
                                     <path d="M12 5l0 14" />
                                     <path d="M18 13l-6 6" />
                                     <path d="M6 13l6 6" />
                                 </svg>
                             </button>
-                            <button style="height: 2em;" data-delete-stop>
+                            <button
+                                class="kbd-button"
+                                data-is-icon
+                                @click="deleteStop(i)"
+                                :disabled="colors.length < 3"
+                            >
                                 <svg class="line-icon line-icon--sm" width="16" height="16" viewBox="0 0 24 24">
                                     <path d="M18 6l-12 12" />
                                     <path d="M6 6l12 12" />
@@ -182,9 +225,14 @@ watch(
                 </tbody>
             </table>
             <div class="rgb-table-buttons">
-                <!-- <KeyboardButton size="lg" id="add-color-stop">
+                <button
+                    class="kbd-button"
+                    @click="addStop()"
+                    :disabled="colors.length >= 10"
+                    data-size="lg"
+                >
                     Add New Color Stop
-                </KeyboardButton> -->
+                </button>
             </div>
         </div>
     </div>
@@ -343,6 +391,10 @@ watch(
     display: flex;
     flex-wrap: nowrap;
     gap: 0.5rem;
+
+    & .kbd-button {
+        height: 2em;
+    }
 }
 
 .rgb-table-buttons {
