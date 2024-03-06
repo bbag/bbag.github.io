@@ -18,18 +18,18 @@ const handleOpacityChange = (event) => {
                     <title>SVG with the filter applied</title>
                 </g>
             </svg>
-            <div class="opacity-display">
+            <p class="opacity-display">
                 <span>Opacity:</span>
                 <input
                     type="range"
                     min="0"
                     max="1"
-                    step="0.1"
+                    step="0.05"
                     v-model="opacity"
                     @input="handleOpacityChange($event)"
                 >
-                <span>{{ opacity * 100 + '%' }}</span>
-            </div>
+                <span style="width: 2.625em;">{{ Math.round(opacity * 100) + '%' }}</span>
+            </p>
         </div>
         <div>
             <svg viewBox="0 0 100 100" style="width: 100%;">
@@ -51,5 +51,9 @@ const handleOpacityChange = (event) => {
     gap: 1rem;
     justify-content: center;
     margin: 1rem auto 0;
+}
+
+input[type="range"] {
+    width: 8rem;
 }
 </style>
