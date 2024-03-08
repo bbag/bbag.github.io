@@ -17,17 +17,26 @@ const { title = 'Billy Baggerman | Portfolio' } = Astro.props
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <!-- SEO stuff -->
         <title>{title}</title>
-        <meta name="description" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer" />
-        <meta name="title" property="og:title" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer" />
-        <meta property="og:type" content="Website" />
-        <!-- <meta name="image" property="og:image" content="https://bbag.github.io/img/thumbnail-portfolio.png" /> -->
-        <meta name="description" property="og:description" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer" />
+        <meta name="title" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer">
+        <meta name="description" content="Hey there, I’m Billy! I’ve got 15+ years’ experience designing and building websites, web apps, and SaaS products.">
         <meta name="author" content="Billy Baggerman" />
         <!-- Favicon stuff -->
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
         <link rel="shortcut icon" href="favicon.ico">
+        <!-- Twitter -->
+        <meta property="twitter:title" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer">
+        <meta property="twitter:description" content="Hey there, I’m Billy! I’ve got 15+ years’ experience designing and building websites, web apps, and SaaS products.">
+        <meta property="twitter:image" content="https://bbag.github.io/img/og-image.jpg">
+        <meta property="twitter:url" content="https://bbag.github.io">
+        <meta property="twitter:card" content="summary_large_image">
+        <!-- Facebook -->
+        <meta property="og:title" content="Billy Baggerman | Frontend developer, UX/UI + Product Designer">
+        <meta property="og:description" content="Hey there, I’m Billy! I’ve got 15+ years’ experience designing and building websites, web apps, and SaaS products.">
+        <meta property="og:url" content="https://bbag.github.io"> 
+        <meta property="og:image" content="https://bbag.github.io/img/og-image.jpg">
+        <meta property="og:type" content="website">
         <!-- Astro stuff -->
         <meta name="generator" content={Astro.generator} />
     </head>
